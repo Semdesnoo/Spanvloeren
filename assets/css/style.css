@@ -852,13 +852,27 @@ a.ci-val:hover{color:var(--red)}
   .hero-vis-badge{bottom:-14px;right:16px}
   .impact{padding:52px 0}
 }
+@keyframes impactSlide{
+  0%{opacity:0;transform:translateY(10px)}
+  8%{opacity:1;transform:translateY(0)}
+  20%{opacity:1;transform:translateY(0)}
+  25%{opacity:0;transform:translateY(-10px)}
+  100%{opacity:0;transform:translateY(-10px)}
+}
 @media(max-width:480px){
   .wrap{padding:0 16px}
   .contact-form,.appt-section{padding:20px}
   .hero-content{padding:96px 16px 52px}
   .hero-actions{flex-direction:column;align-items:stretch}
   .hero-actions .btn{justify-content:center;width:100%}
-  .impact-grid{grid-template-columns:1fr}
+  .impact-grid{display:block;position:relative;overflow:hidden;height:118px}
+  .impact-item{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0;transition:none!important;opacity:0;transform:none;animation:impactSlide 12s infinite both}
+  .impact-item.visible{opacity:0;transform:none;transition:none!important}
+  .impact-item:not(:last-child)::after{display:none}
+  .impact-item:nth-child(1){animation-delay:0s}
+  .impact-item:nth-child(2){animation-delay:3s}
+  .impact-item:nth-child(3){animation-delay:6s}
+  .impact-item:nth-child(4){animation-delay:9s}
   .stat{padding:0 12px 0 0}
   .stat-val{font-size:30px}
   .stat-lbl{font-size:10px}
