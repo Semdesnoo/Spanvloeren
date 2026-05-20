@@ -139,31 +139,6 @@ const FOOTER_HTML = `
 <footer class="footer">
   <div class="footer-top-bar"></div>
 
-  <!-- Stats band -->
-  <div class="footer-stats-band">
-    <div class="wrap footer-stats-inner">
-      <div class="footer-stat-item">
-        <span class="footer-stat-n">500+</span>
-        <span class="footer-stat-l" data-i18n="footer.stat1">Tevreden klanten</span>
-      </div>
-      <div class="footer-stat-div"></div>
-      <div class="footer-stat-item">
-        <span class="footer-stat-n">45+</span>
-        <span class="footer-stat-l" data-i18n="footer.stat2">Jaar ervaring</span>
-      </div>
-      <div class="footer-stat-div"></div>
-      <div class="footer-stat-item">
-        <span class="footer-stat-n">100%</span>
-        <span class="footer-stat-l" data-i18n="footer.stat3">Maatwerk</span>
-      </div>
-      <div class="footer-stat-div"></div>
-      <div class="footer-stat-item">
-        <span class="footer-stat-n" data-i18n="footer.statN4">4 landen</span>
-        <span class="footer-stat-l">NL · BE · DE · CW</span>
-      </div>
-    </div>
-  </div>
-
   <!-- Main grid -->
   <div class="wrap footer-main">
     <div class="footer-grid">
