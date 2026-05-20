@@ -839,7 +839,7 @@ a.ci-val:hover{color:var(--red)}
   .ci-divider{width:100%;height:1px;margin:0}
   .field-row{grid-template-columns:1fr}
   .footer-grid{grid-template-columns:1fr;gap:28px}
-  .footer-main{padding:36px 0 28px}
+  .footer-main{padding:64px 0 28px}
   .footer-bottom{flex-direction:column;align-items:flex-start;gap:8px}
   .footer-kvk{flex-direction:column;gap:4px;align-items:flex-start}
   .footer-kvk-sep{display:none}
