@@ -814,7 +814,7 @@ a.ci-val:hover{color:var(--red)}
 @media(max-width:768px){
   .section{padding:60px 0}
   .hero h1{font-size:clamp(40px,11vw,60px)}
-  .hero-content{padding:120px 28px 64px}
+  .hero-content{padding:100px 28px 64px}
   .hero-stats{grid-template-columns:repeat(3,1fr);width:100%}
   .stat-val{font-size:36px}
   .stat:not(:last-child)::after{display:none}
@@ -855,7 +855,7 @@ a.ci-val:hover{color:var(--red)}
 @media(max-width:480px){
   .wrap{padding:0 16px}
   .contact-form,.appt-section{padding:20px}
-  .hero-content{padding:110px 16px 52px}
+  .hero-content{padding:96px 16px 52px}
   .hero-actions{flex-direction:column;align-items:stretch}
   .hero-actions .btn{justify-content:center;width:100%}
   .impact-grid{grid-template-columns:1fr}
