@@ -217,7 +217,7 @@ ul{list-style:none}
 /* ========================================================
    MARQUEE
    ======================================================== */
-.marquee-wrap{background:var(--red);padding:14px 0;overflow:hidden}
+.marquee-wrap{background:var(--red);padding:14px 0;overflow:hidden;margin-top:80px}
 .marquee-track{display:flex;width:max-content;animation:marquee 28s linear infinite}
 .marquee-item{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,.9);white-space:nowrap;padding:0 20px}
 .marquee-slash{color:rgba(255,255,255,.4);margin-left:20px}
@@ -873,6 +873,7 @@ a.ci-val:hover{color:var(--red)}
   .faq-wrap--cards .faq-body-inner{padding:0 16px 20px 16px}
   .faq-wrap--cards .faq-btn{padding:16px 18px}
   .process-step{padding:0 8px}
+  .marquee-wrap{margin-top:48px}
 }
 
 /* ── boksringen – fight-card layout ── */
