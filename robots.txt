@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /checkout.html
+Disallow: /betaald.html
+Disallow: /api/
+
+Sitemap: https://www.spanvloeren.nl/sitemap.xml

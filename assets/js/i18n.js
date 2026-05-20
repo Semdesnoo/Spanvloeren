@@ -28,7 +28,7 @@ const TRANSLATIONS = {
     },
     home:{
       badge:'Specialist in sportvloeren · Opgericht 1978',
-      title:'De Vloer Die\n<em>Presteert</em>\nAls Jij Dat Doet',
+      title:'De Spanvloer Die\n<em>Presteert</em>\nAls Jij Dat Doet',
       sub:'Professionele spanvloeren met de juiste demping en grip voor karate, judo, MMA, BJJ en meer. Volledig op maat voor jouw sportschool.',
       stat1val:'500', stat1lbl:'Tevreden Klanten',
       stat2val:'45',  stat2lbl:'Jaar Ervaring',
@@ -1281,6 +1281,11 @@ const TRANSLATIONS = {
 ══════════════════════════════════════════════ */
 
 function getLang() {
+  const urlParam = new URLSearchParams(window.location.search).get('lang');
+  if (urlParam && TRANSLATIONS[urlParam]) {
+    localStorage.setItem('sv_lang', urlParam);
+    return urlParam;
+  }
   return localStorage.getItem('sv_lang') || 'nl';
 }
 
