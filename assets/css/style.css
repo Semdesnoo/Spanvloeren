@@ -147,7 +147,7 @@ ul{list-style:none}
 .mob-lang{display:flex;gap:6px;padding:8px 14px}
 .mob-lang .lang-btn{color:var(--muted)}
 .mob-lang .lang-btn:hover,.mob-lang .lang-btn.active{color:var(--black);background:var(--off)}
-.mobile-menu .btn-red{margin:8px 14px 0;text-align:center;justify-content:center}
+.mobile-menu .btn-red{margin:8px 14px 0;text-align:center;justify-content:center;color:#fff}
 
 /* ========================================================
    HERO – Two-column layout
