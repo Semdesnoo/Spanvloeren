@@ -764,8 +764,8 @@ a.ci-val:hover{color:var(--red)}
 .footer-contact-icon{width:34px;height:34px;display:flex;align-items:center;justify-content:center;background:rgba(230,57,70,.15);border-radius:6px;flex-shrink:0;color:var(--red)}
 .footer-contact-text{display:flex;flex-direction:column;gap:1px}
 .footer-contact-text strong{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.35);font-weight:600}
-.footer-contact-text span,.footer-contact-item a .footer-contact-text{color:rgba(255,255,255,.8);font-size:13.5px}
-.footer-contact-item a{color:rgba(255,255,255,.8)}
+.footer-contact-text span,.footer-contact-item a .footer-contact-text{color:#fff;font-size:13.5px}
+.footer-contact-item a{color:#fff}
 
 /* Bottom bar */
 .footer-bottom-wrap{background:#090909;border-top:1px solid rgba(255,255,255,.06)}
