@@ -485,6 +485,10 @@ ul{list-style:none}
 .contact-info--strip{display:flex;align-items:center;gap:0;background:#fff;border:1.5px solid rgba(0,0,0,.08);border-radius:16px;padding:28px 36px;margin-bottom:44px;box-shadow:0 4px 24px rgba(0,0,0,.06)}
 .contact-info--strip .contact-item{flex:1;border-bottom:none;padding:0}
 .contact-info.contact-info--strip{padding-top:28px}
+
+/* ── Referenties: taller mobile hero ── */
+@media(max-width:768px){.page-referentie .page-hero-content{padding-bottom:100px}}
+@media(max-width:480px){.page-referentie .page-hero-content{padding-bottom:120px}}
 .ci-divider{width:1px;height:48px;background:rgba(0,0,0,.08);flex-shrink:0;margin:0 32px}
 .contact-info{padding-top:12px}
 .contact-item{display:flex;gap:18px;padding:22px 0;border-bottom:1px solid rgba(0,0,0,.07);align-items:flex-start}
