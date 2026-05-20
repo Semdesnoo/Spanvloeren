@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="nl" id="html">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Afrekenen – Spanvloeren.nl</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/css/style.css?v=24" />
+  <style>#cart-float-btn,#float-cta{display:none!important}</style>
+</head>
+<body class="subpage">
+<div id="nav-placeholder"></div>
+
+<div class="page-hero" aria-labelledby="ph1">
+  <div class="page-hero-bg" aria-hidden="true"></div>
+  <div class="page-hero-accent" aria-hidden="true"></div>
+  <div class="wrap page-hero-content">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a><span class="breadcrumb-sep" aria-hidden="true">›</span>
+      <a href="/producten.html">Producten</a><span class="breadcrumb-sep" aria-hidden="true">›</span>
+      <span class="current">Afrekenen</span>
+    </nav>
+    <span class="label" data-i18n="checkout.heroLabel">Miral Webshop</span>
+    <h1 id="ph1" data-i18n="checkout.heroTitle">Afrekenen</h1>
+  </div>
+  <div class="page-hero-clip" aria-hidden="true"></div>
+</div>
+
+<section class="section">
+  <div class="wrap">
+
+    <!-- Success state (hidden until order placed) -->
+    <div class="checkout-success" id="checkout-success">
+      <div class="checkout-success-icon">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <h2 data-i18n="checkout.successTitle">Bestelling Ontvangen!</h2>
+      <p data-i18n="checkout.successBody">Bedankt voor je bestelling. Je ontvangt binnen 24 uur een bevestiging per e-mail met betaalinstructies.<br>Vragen? Bel ons op <a href="tel:+31683296802" style="color:var(--red);font-weight:600">06 832 968 02</a>.</p>
+      <a href="/producten.html" class="btn btn-red" data-i18n="checkout.successBtn">Terug naar producten</a>
+    </div>
+
+    <!-- Checkout form (hidden after success) -->
+    <div class="checkout-grid" id="checkout-main">
+
+      <!-- ── LEFT: Form ── -->
+      <div>
+
+        <!-- Contact -->
+        <div class="checkout-block">
+          <h3 data-i18n="checkout.contactTitle">Contactgegevens</h3>
+          <div class="field-row" style="margin-bottom:16px">
+            <div class="field">
+              <label for="voornaam" data-i18n="checkout.firstName">Voornaam *</label>
+              <input type="text" id="voornaam" autocomplete="given-name" required placeholder="Jan">
+            </div>
+            <div class="field">
+              <label for="achternaam" data-i18n="checkout.lastName">Achternaam *</label>
+              <input type="text" id="achternaam" autocomplete="family-name" required placeholder="Jansen">
+            </div>
+          </div>
+          <div class="field" style="margin-bottom:16px">
+            <label for="email" data-i18n="checkout.emailLabel">E-mailadres *</label>
+            <input type="email" id="email" autocomplete="email" required placeholder="jan@example.nl">
+          </div>
+          <div class="field">
+            <label for="telefoon" data-i18n="checkout.phoneLabel">Telefoonnummer *</label>
+            <input type="tel" id="telefoon" autocomplete="tel" required placeholder="+31 6 12345678">
+          </div>
+        </div>
+
+        <!-- Shipping address -->
+        <div class="checkout-block">
+          <h3 data-i18n="checkout.addressTitle">Bezorgadres</h3>
+          <div class="field-row-3" style="margin-bottom:16px">
+            <div class="field">
+              <label for="postcode" data-i18n="checkout.postcodeLabel">Postcode *</label>
+              <input type="text" id="postcode" autocomplete="postal-code" required placeholder="1234 AB">
+            </div>
+            <div class="field">
+              <label for="stad" data-i18n="checkout.cityLabel">Stad *</label>
+              <input type="text" id="stad" autocomplete="address-level2" required placeholder="Amsterdam">
+            </div>
+          </div>
+          <div class="field-row-3" style="margin-bottom:16px">
+            <div class="field">
+              <label for="huisnummer" data-i18n="checkout.houseLabel">Huisnr. *</label>
+              <input type="text" id="huisnummer" required placeholder="12A">
+            </div>
+            <div class="field">
+              <label for="straat" data-i18n="checkout.streetLabel">Straat *</label>
+              <input type="text" id="straat" autocomplete="street-address" required placeholder="Voorbeeldstraat">
+            </div>
+          </div>
+          <div class="field" style="margin-bottom:16px">
+            <label for="land" data-i18n="checkout.countryLabel">Land *</label>
+            <select id="land" autocomplete="country-name">
+              <option value="Nederland" data-i18n="checkout.countryNL">Nederland</option>
+              <option value="België" data-i18n="checkout.countryBE">België</option>
+              <option value="Duitsland" data-i18n="checkout.countryDE">Duitsland</option>
+              <option value="Curaçao" data-i18n="checkout.countryCW">Curaçao</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="notities" data-i18n="checkout.notesLabel">Opmerkingen (optioneel)</label>
+            <textarea id="notities" rows="3" placeholder="Eventuele opmerkingen bij je bestelling..." data-i18n-ph="checkout.notesPh"></textarea>
+          </div>
+        </div>
+
+        <!-- Payment method -->
+        <div class="checkout-block">
+          <h3 data-i18n="checkout.paymentTitle">Betaalmethode</h3>
+          <div class="payment-methods">
+
+            <!-- iDEAL -->
+            <label class="payment-option">
+              <input type="radio" name="payment" value="ideal" checked>
+              <div class="payment-option-inner">
+                <div class="payment-radio"></div>
+                <div class="payment-logo-wrap">
+                  <img src="/assets/images/payment/ideal.png" alt="iDEAL" class="payment-logo">
+                </div>
+                <div>
+                  <div class="payment-label">iDEAL</div>
+                  <div class="payment-sublabel" data-i18n="checkout.idealSub">Meest gebruikt in Nederland</div>
+                </div>
+                <span class="payment-flag">🇳🇱</span>
+              </div>
+            </label>
+
+            <!-- Bancontact -->
+            <label class="payment-option">
+              <input type="radio" name="payment" value="bancontact">
+              <div class="payment-option-inner">
+                <div class="payment-radio"></div>
+                <div class="payment-logo-wrap">
+                  <img src="/assets/images/payment/bancontact.jpg" alt="Bancontact" class="payment-logo">
+                </div>
+                <div>
+                  <div class="payment-label">Bancontact</div>
+                  <div class="payment-sublabel" data-i18n="checkout.bancontactSub">Meest gebruikt in België</div>
+                </div>
+                <span class="payment-flag">🇧🇪</span>
+              </div>
+            </label>
+
+            <!-- SOFORT / Klarna Sofort -->
+            <label class="payment-option">
+              <input type="radio" name="payment" value="sofort">
+              <div class="payment-option-inner">
+                <div class="payment-radio"></div>
+                <div class="payment-logo-wrap">
+                  <img src="/assets/images/payment/sofort.png" alt="SOFORT" class="payment-logo">
+                </div>
+                <div>
+                  <div class="payment-label">SOFORT Banking</div>
+                  <div class="payment-sublabel" data-i18n="checkout.sofortSub">Meest gebruikt in Duitsland</div>
+                </div>
+                <span class="payment-flag">🇩🇪</span>
+              </div>
+            </label>
+
+            <!-- PayPal -->
+            <label class="payment-option">
+              <input type="radio" name="payment" value="paypal">
+              <div class="payment-option-inner">
+                <div class="payment-radio"></div>
+                <div class="payment-logo-wrap">
+                  <img src="/assets/images/payment/paypal.png" alt="PayPal" class="payment-logo">
+                </div>
+                <div>
+                  <div class="payment-label">PayPal</div>
+                  <div class="payment-sublabel" data-i18n="checkout.paypalSub">Betaal via je PayPal account</div>
+                </div>
+              </div>
+            </label>
+
+            <!-- Creditcard (Visa / Mastercard) -->
+            <label class="payment-option">
+              <input type="radio" name="payment" value="creditcard">
+              <div class="payment-option-inner">
+                <div class="payment-radio"></div>
+                <div class="payment-logo-wrap payment-logo-wrap--cards">
+                  <img src="/assets/images/payment/visa.png" alt="Visa" class="payment-logo payment-logo--sm">
+                  <img src="/assets/images/payment/mastercard.svg" alt="Mastercard" class="payment-logo payment-logo--sm">
+                </div>
+                <div>
+                  <div class="payment-label">Creditcard</div>
+                  <div class="payment-sublabel" data-i18n="checkout.creditcardSub">Visa &amp; Mastercard</div>
+                </div>
+              </div>
+            </label>
+
+            <!-- Klarna -->
+            <label class="payment-option">
+              <input type="radio" name="payment" value="klarna">
+              <div class="payment-option-inner">
+                <div class="payment-radio"></div>
+                <div class="payment-logo-wrap">
+                  <img src="/assets/images/payment/klarna.avif" alt="Klarna" class="payment-logo">
+                </div>
+                <div>
+                  <div class="payment-label">Klarna</div>
+                  <div class="payment-sublabel" data-i18n="checkout.klarnaSub">Achteraf betalen</div>
+                </div>
+              </div>
+            </label>
+
+            <!-- SEPA Bankoverschrijving -->
+            <label class="payment-option">
+              <input type="radio" name="payment" value="banktransfer">
+              <div class="payment-option-inner">
+                <div class="payment-radio"></div>
+                <div class="payment-logo-wrap payment-logo-wrap--icon">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                </div>
+                <div>
+                  <div class="payment-label" data-i18n="checkout.sepaLabel">SEPA Bankoverschrijving</div>
+                  <div class="payment-sublabel" data-i18n="checkout.sepaSub">Directe overboeking · NL / BE / DE</div>
+                </div>
+              </div>
+            </label>
+
+          </div>
+          <p class="payment-info">Veilig betalen via <strong>Mollie</strong>. Je wordt na het plaatsen doorgestuurd naar de betaalpagina van je gekozen methode.</p>
+        </div>
+
+        <button type="button" class="btn btn-red checkout-submit" id="checkout-submit" data-i18n="checkout.submitBtn">
+          Bestelling Plaatsen →
+        </button>
+
+      </div>
+
+      <!-- ── RIGHT: Order summary ── -->
+      <div class="checkout-summary">
+        <h3 data-i18n="checkout.summaryTitle">Jouw Bestelling</h3>
+
+        <div class="order-item">
+          <div class="order-item-img">
+            <img id="summary-img" src="/assets/images/producten/Dagelijkse%20Reiniger.png" alt="Product" />
+          </div>
+          <div class="order-item-info">
+            <span class="order-item-name" id="summary-name">Dagelijkse Reiniger</span>
+            <span class="order-item-sub" id="summary-sub">Miral · 1L</span>
+          </div>
+          <span class="order-item-price" id="summary-line-price">€ 12,49</span>
+        </div>
+
+        <div class="order-totals">
+          <div class="order-total-row">
+            <span>Subtotaal</span>
+            <span id="summary-subtotal">€ 12,49</span>
+          </div>
+          <div class="order-total-row">
+            <span>Verzendkosten</span>
+            <span id="summary-shipping">€ 4,95</span>
+          </div>
+        </div>
+
+        <div class="order-grand">
+          <span>Totaal</span>
+          <span class="order-grand-val" id="summary-total">€ 17,44</span>
+        </div>
+
+        <div class="ship-note" id="ship-note" style="display:none">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+          Gratis verzending toegepast!
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div id="footer-placeholder"></div>
+<script src="/assets/js/i18n.js?v=24"></script>
+<script src="/assets/js/main.js?v=24"></script>
+<script src="/assets/js/cart.js?v=24"></script>
+<script>
+(function () {
+  var SHIPPING_COST = 4.95;
+  var FREE_THRESHOLD = 50;
+
+  function fmt(n) { return '€ ' + n.toFixed(2).replace('.', ','); }
+
+  /* ── Load order items: prefer localStorage cart, fall back to URL params ── */
+  var cartItems = [];
+  try { cartItems = JSON.parse(localStorage.getItem('miral-cart')) || []; } catch (e) {}
+
+  var useCart = cartItems.length > 0;
+
+  var PRODUCT_IMAGES = {
+    dagelijks: '/assets/images/producten/Dagelijkse%20Reiniger.png',
+    diepte:    '/assets/images/producten/Diepte%20Reiniger.png'
+  };
+  var PRODUCT_NAMES = {
+    dagelijks: 'Dagelijkse Reiniger',
+    diepte:    'Diepte Reiniger'
+  };
+
+  /* ── Build order summary ── */
+  function buildSummary() {
+    if (useCart) {
+      var t = MiralCart.calcTotals(cartItems);
+
+      /* Replace single-item row with multi-item rows */
+      var singleRow = document.querySelector('.order-item');
+      var fragment  = document.createDocumentFragment();
+      cartItems.forEach(function (item) {
+        var imgSrc = PRODUCT_IMAGES[item.key] || '';
+        var div = document.createElement('div');
+        div.className = 'order-item';
+        div.innerHTML =
+          '<div class="order-item-img">' +
+            (imgSrc ? '<img src="' + imgSrc + '" alt="' + (item.name || '') + '" />' : '') +
+          '</div>' +
+          '<div class="order-item-info">' +
+            '<span class="order-item-name">' + (PRODUCT_NAMES[item.key] || item.name || item.key) + '</span>' +
+            '<span class="order-item-sub">' + (item.bundle ? '6-Pack Bundel' : '1L') + ' &times; ' + item.qty + '</span>' +
+          '</div>' +
+          '<span class="order-item-price">' + fmt(item.linePrice) + '</span>';
+        fragment.appendChild(div);
+      });
+      singleRow.replaceWith(fragment);
+
+      document.getElementById('summary-subtotal').textContent = fmt(t.sub);
+      document.getElementById('summary-shipping').textContent = t.ship === 0 ? 'Gratis' : fmt(t.ship);
+      document.getElementById('summary-total').textContent    = fmt(t.grand);
+      document.getElementById('ship-note').style.display      = t.ship === 0 ? 'flex' : 'none';
+    } else {
+      /* Legacy URL-params single-item mode */
+      var PRODUCTS = {
+        dagelijks: { name: 'Dagelijkse Reiniger', label: 'Miral Dagelijkse Reiniger', price: 12.49, bundlePrice: 49.95 },
+        diepte:    { name: 'Diepte Reiniger',     label: 'Miral Diepte Reiniger',     price: 14.95, bundlePrice: 59.95 }
+      };
+      var params    = new URLSearchParams(window.location.search);
+      var prodKey   = params.get('product') || 'dagelijks';
+      var isBundle  = params.get('bundle') === '1';
+      var qty       = Math.max(1, parseInt(params.get('qty') || '1', 10));
+      var product   = PRODUCTS[prodKey] || PRODUCTS.dagelijks;
+      var unitPrice = isBundle ? product.bundlePrice : product.price;
+      var linePrice = unitPrice * qty;
+      var shipping  = (isBundle || linePrice >= FREE_THRESHOLD) ? 0 : SHIPPING_COST;
+
+      var imgEl = document.getElementById('summary-img');
+      if (imgEl && PRODUCT_IMAGES[prodKey]) { imgEl.src = PRODUCT_IMAGES[prodKey]; imgEl.alt = product.name; }
+      document.getElementById('summary-name').textContent       = product.name;
+      document.getElementById('summary-sub').textContent        = isBundle ? 'Miral - 6-Pack Bundel x' + qty : 'Miral - ' + qty + (qty === 1 ? ' fles (1L)' : ' flessen (1L elk)');
+      document.getElementById('summary-line-price').textContent = fmt(linePrice);
+      document.getElementById('summary-subtotal').textContent   = fmt(linePrice);
+      document.getElementById('summary-shipping').textContent   = shipping === 0 ? 'Gratis' : fmt(shipping);
+      document.getElementById('summary-total').textContent      = fmt(linePrice + shipping);
+      document.getElementById('ship-note').style.display        = shipping === 0 ? 'flex' : 'none';
+    }
+  }
+
+  buildSummary();
+
+  /* ── Submit ── */
+  document.getElementById('checkout-submit').addEventListener('click', function () {
+    var required = ['voornaam','achternaam','email','telefoon','postcode','stad','huisnummer','straat'];
+    var missing = false;
+    required.forEach(function (id) {
+      var el = document.getElementById(id);
+      if (!el.value.trim()) { el.style.borderColor = 'var(--red)'; missing = true; }
+      else { el.style.borderColor = ''; }
+    });
+    if (missing) { document.querySelector('.checkout-block').scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
+
+    var voornaam   = document.getElementById('voornaam').value.trim();
+    var achternaam = document.getElementById('achternaam').value.trim();
+    var email      = document.getElementById('email').value.trim();
+    var telefoon   = document.getElementById('telefoon').value.trim();
+    var postcode   = document.getElementById('postcode').value.trim();
+    var stad       = document.getElementById('stad').value.trim();
+    var huisnummer = document.getElementById('huisnummer').value.trim();
+    var straat     = document.getElementById('straat').value.trim();
+    var land       = document.getElementById('land').value;
+    var notities   = document.getElementById('notities').value.trim();
+    var payment    = document.querySelector('input[name="payment"]:checked').value;
+
+    var subtotal = 0, shipping = 0, grand = 0, orderLines = '';
+
+    if (useCart) {
+      var t = MiralCart.calcTotals(cartItems);
+      subtotal = t.sub; shipping = t.ship; grand = t.grand;
+      cartItems.forEach(function (item) {
+        orderLines += item.name + ' (' + (item.bundle ? '6-Pack Bundel' : '1L') + ') x' + item.qty + ' = ' + fmt(item.linePrice) + '\n';
+      });
+    } else {
+      var PRODUCTS2 = {
+        dagelijks: { name: 'Dagelijkse Reiniger', label: 'Miral Dagelijkse Reiniger', price: 12.49, bundlePrice: 49.95 },
+        diepte:    { name: 'Diepte Reiniger',     label: 'Miral Diepte Reiniger',     price: 14.95, bundlePrice: 59.95 }
+      };
+      var params2   = new URLSearchParams(window.location.search);
+      var prodKey2  = params2.get('product') || 'dagelijks';
+      var isBundle2 = params2.get('bundle') === '1';
+      var qty2      = Math.max(1, parseInt(params2.get('qty') || '1', 10));
+      var product2  = PRODUCTS2[prodKey2] || PRODUCTS2.dagelijks;
+      var up2       = isBundle2 ? product2.bundlePrice : product2.price;
+      subtotal      = up2 * qty2;
+      shipping      = (isBundle2 || subtotal >= FREE_THRESHOLD) ? 0 : SHIPPING_COST;
+      grand         = subtotal + shipping;
+      orderLines    = product2.label + (isBundle2 ? ' 6-Pack Bundel' : '') + ' x' + qty2 + ' = ' + fmt(subtotal) + '\n';
+    }
+
+    var btn = document.getElementById('checkout-submit');
+    btn.disabled = true;
+    btn.textContent = 'Even wachten...';
+
+    var customer = {
+      name: voornaam + ' ' + achternaam,
+      email: email, telefoon: telefoon,
+      straat: straat, huisnummer: huisnummer,
+      postcode: postcode, stad: stad, land: land, notities: notities
+    };
+
+    // ── Probeer Mollie ────────────────────────────────────────────────────────
+    fetch('/api/create-payment.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ amount: grand, method: payment, customer: customer, items: cartItems })
+    })
+    .then(function (res) { return res.json(); })
+    .then(function (data) {
+      if (data.checkoutUrl) {
+        // Mollie betaling aangemaakt → doorsturen naar betaalpagina
+        window.location.href = data.checkoutUrl;
+      } else {
+        throw new Error(data.error || 'Geen checkoutUrl');
+      }
+    })
+    .catch(function () {
+      // ── Fallback: e-mail ──────────────────────────────────────────────────
+      var subject = encodeURIComponent('Nieuwe bestelling – Miral Schoonmaakproducten');
+      var body = encodeURIComponent(
+        'NIEUWE BESTELLING\n=================\n\n' + orderLines +
+        '\nSubtotaal:      ' + fmt(subtotal) +
+        '\nVerzendkosten:  ' + (shipping === 0 ? 'Gratis' : fmt(shipping)) +
+        '\nTOTAAL:         ' + fmt(grand) +
+        '\nBetaalmethode:  ' + payment +
+        '\n\nKLANTGEGEVENS\n=============\n' +
+        'Naam:     ' + customer.name + '\n' +
+        'E-mail:   ' + email + '\n' +
+        'Telefoon: ' + telefoon +
+        '\n\nBEZORGADRES\n===========\n' +
+        straat + ' ' + huisnummer + '\n' + postcode + ' ' + stad + '\n' + land +
+        '\n\nOPMERKINGEN\n===========\n' + (notities || 'Geen')
+      );
+      window.location.href = 'mailto:info@spanvloeren.nl?subject=' + subject + '&body=' + body;
+
+      setTimeout(function () {
+        if (useCart) { localStorage.removeItem('miral-cart'); }
+        document.getElementById('checkout-main').style.display = 'none';
+        var s = document.getElementById('checkout-success');
+        s.classList.add('show');
+        s.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 800);
+    });
+  });
+})();
+</script>
+</body>
+</html>
+
+
+

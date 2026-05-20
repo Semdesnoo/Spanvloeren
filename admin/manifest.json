@@ -1,0 +1,14 @@
+{
+  "name": "Spanvloeren Admin",
+  "short_name": "Spanvloeren",
+  "description": "Bestellingenbeheer Spanvloeren.nl",
+  "start_url": "/admin/",
+  "scope": "/admin/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0f0f0f",
+  "theme_color": "#e63946",
+  "icons": [
+    { "src": "/admin/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

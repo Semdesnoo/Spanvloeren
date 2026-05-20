@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
+<body style="margin:0;padding:0;background:#f4f6fb;font-family:Arial,Helvetica,sans-serif">
+<table width="100%" cellpadding="0" cellspacing="0" style="background:#f4f6fb">
+<tr><td align="center" style="padding:40px 16px">
+<table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%">
+
+  <!-- Header -->
+  <tr><td style="background:#e63946;border-radius:12px 12px 0 0;padding:36px 40px">
+    <div style="font-family:'Arial Black',Arial,sans-serif;font-size:36px;font-weight:900;color:#fff;letter-spacing:0px;text-transform:uppercase;line-height:1">MIRAL</div>
+    <div style="font-size:12px;color:rgba(255,255,255,.7);margin-top:6px;letter-spacing:1px;text-transform:uppercase">Professionele sportvloerreiniging &mdash; bij Spanvloeren.nl</div>
+  </td></tr>
+
+  <!-- Body -->
+  <tr><td style="background:#fff;padding:40px">
+
+    <h1 style="font-size:24px;font-weight:900;color:#111827;margin:0 0 6px">Bedankt voor uw bestelling!</h1>
+    <p style="color:#6b7280;font-size:15px;margin:0 0 28px">Beste {{name}}, we hebben uw bestelling in goede orde ontvangen en gaan er direct mee aan de slag.</p>
+
+    <!-- Bestelnummer -->
+    <div style="background:#f4f6fb;border:1px solid #e5e7eb;border-radius:8px;padding:14px 18px;margin-bottom:32px;display:inline-block">
+      <span style="font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#9ca3af">Bestelnummer</span><br>
+      <span style="font-size:18px;font-weight:900;color:#e63946;font-family:'Arial Black',Arial,sans-serif">{{order_id}}</span>
+    </div>
+
+    <!-- Producten -->
+    <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:24px">
+      <tr>
+        <th style="font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#9ca3af;text-align:left;padding-bottom:10px">Product</th>
+        <th style="font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#9ca3af;text-align:center;padding-bottom:10px">Aantal</th>
+        <th style="font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#9ca3af;text-align:right;padding-bottom:10px">Prijs</th>
+      </tr>
+      {{items_table}}
+      <tr>
+        <td colspan="2" style="padding-top:14px;font-size:15px;font-weight:700;color:#111827">Totaal</td>
+        <td style="padding-top:14px;font-size:18px;font-weight:900;color:#e63946;text-align:right;font-family:'Arial Black',Arial,sans-serif">{{total}}</td>
+      </tr>
+    </table>
+
+    <!-- Bezorgadres -->
+    <div style="background:#f4f6fb;border-radius:8px;padding:18px 20px;margin-bottom:32px">
+      <div style="font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#9ca3af;margin-bottom:8px">Bezorgadres</div>
+      <div style="font-size:15px;color:#111827;line-height:1.8">{{address_name}}<br>{{address_street}}<br>{{address_pc}}<br>{{address_country}}</div>
+    </div>
+
+    <!-- Volgende stap -->
+    <div style="background:#fff8f8;border:1px solid #fecdd3;border-radius:8px;padding:18px 20px">
+      <div style="font-size:14px;color:#9f1239;line-height:1.6">
+        <strong>Wat nu?</strong> Zodra uw bestelling is ingepakt en verzonden, ontvangt u een tweede e-mail met uw <strong>track &amp; trace nummer</strong> waarmee u de bezorging kunt volgen.
+      </div>
+    </div>
+
+  </td></tr>
+
+  <!-- Footer -->
+  <tr><td style="background:#f4f6fb;border-radius:0 0 12px 12px;padding:28px 40px;text-align:center;border-top:1px solid #e5e7eb">
+    <div style="font-family:'Arial Black',Arial,sans-serif;font-size:16px;font-weight:900;color:#e63946;letter-spacing:3px;text-transform:uppercase;margin-bottom:4px">MIRAL</div>
+    <div style="font-size:12px;color:#9ca3af;margin-bottom:12px">bij <a href="https://www.spanvloeren.nl" style="color:#9ca3af;text-decoration:none">Spanvloeren.nl</a></div>
+    <p style="color:#9ca3af;font-size:13px;margin:0 0 4px">Vragen over uw bestelling?</p>
+    <p style="margin:0"><a href="mailto:info@spanvloeren.nl" style="color:#e63946;font-size:13px;font-weight:700;text-decoration:none">info@spanvloeren.nl</a></p>
+    <p style="color:#d1d5db;font-size:11px;margin:16px 0 0">&copy; Miral &mdash; een product van Spanvloeren.nl</p>
+  </td></tr>
+
+</table>
+</td></tr>
+</table>
+</body></html>

@@ -1,0 +1,4 @@
+# Bescherm de SQLite-database en het logbestand tegen directe toegang
+<FilesMatch "\.(db|log|sqlite)$">
+    Require all denied
+</FilesMatch>

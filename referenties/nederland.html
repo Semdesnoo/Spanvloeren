@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="nl" id="html">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Referenties Nederland – Spanvloeren.nl</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/css/style.css?v=24" />
+  <style>
+    /* ── Tab toggle ── */
+    .ref-tabs-wrap{display:flex;justify-content:center;margin-bottom:52px}
+    .ref-tabs{display:inline-flex;background:#f0f0f0;border-radius:12px;padding:5px;gap:4px}
+    .ref-tab-btn{display:flex;align-items:center;gap:9px;padding:12px 28px;border-radius:8px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#777;background:none;cursor:pointer;transition:all 200ms;white-space:nowrap}
+    .ref-tab-btn svg{flex-shrink:0;transition:color 200ms}
+    .ref-tab-btn.active{background:#fff;color:#111;box-shadow:0 2px 12px rgba(0,0,0,.1)}
+    .ref-tab-btn.active svg{color:var(--red)}
+    .ref-tab-btn:not(.active):hover{color:#333}
+
+    /* ── Panels ── */
+    .ref-panel{display:block}
+    .ref-panel.hidden{display:none}
+
+    /* ── Kazerne cards ── */
+    .kaz-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+    .kaz-card{background:#fff;border:1.5px solid #eee;border-radius:14px;padding:28px 24px;display:flex;gap:18px;align-items:flex-start;transition:border-color 200ms,box-shadow 200ms}
+    .kaz-card:hover{border-color:rgba(230,57,70,.35);box-shadow:0 6px 24px rgba(230,57,70,.08)}
+    .kaz-shield{width:48px;height:48px;flex-shrink:0;background:rgba(230,57,70,.07);border:1.5px solid rgba(230,57,70,.18);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--red)}
+    .kaz-body{}
+    .kaz-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--red);margin-bottom:5px}
+    .kaz-name{font-family:'Barlow Condensed',sans-serif;font-size:19px;font-weight:800;color:#111;line-height:1.15;margin-bottom:4px}
+    .kaz-loc{font-size:13px;color:#888;display:flex;align-items:center;gap:5px}
+    .kaz-loc svg{color:var(--red);flex-shrink:0}
+    .kaz-tag{display:inline-block;margin-top:10px;padding:3px 10px;background:rgba(230,57,70,.08);color:var(--red);font-size:11px;font-weight:700;letter-spacing:.5px;border-radius:4px;text-transform:uppercase}
+
+    /* ── Kazerne intro banner ── */
+    .kaz-banner{background:linear-gradient(135deg,#0d0d0d 0%,#1a1a1a 100%);border-radius:16px;padding:36px 40px;display:flex;align-items:center;gap:32px;margin-bottom:44px}
+    .kaz-banner-icon{width:64px;height:64px;background:rgba(230,57,70,.15);border:2px solid rgba(230,57,70,.3);border-radius:12px;display:flex;align-items:center;justify-content:center;color:var(--red);flex-shrink:0}
+    .kaz-banner-text h3{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;color:#fff;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+    .kaz-banner-text p{font-size:14px;color:rgba(255,255,255,.5);line-height:1.65;max-width:600px}
+
+    .ref-panel-header{margin-bottom:44px}
+    @media(max-width:900px){.kaz-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:600px){
+      .kaz-grid{grid-template-columns:1fr}
+      .ref-tab-btn{padding:10px 16px;font-size:12px}
+      .kaz-banner{flex-direction:column;gap:20px;padding:24px}
+    }
+  </style>
+</head>
+<body class="subpage">
+<div id="nav-placeholder"></div>
+
+<div class="page-hero" aria-labelledby="ph1">
+  <div class="page-hero-bg" aria-hidden="true"></div>
+  <div class="page-hero-accent" aria-hidden="true"></div>
+  <div class="wrap page-hero-content">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a><span class="breadcrumb-sep" aria-hidden="true">›</span>
+      <a href="/referenties/nederland.html">Referenties</a><span class="breadcrumb-sep" aria-hidden="true">›</span>
+      <span class="current">Nederland</span>
+    </nav>
+    <span class="label">Projecten</span>
+    <h1 id="ph1">Referenties<br>Nederland</h1>
+    <p class="sub" data-i18n="refs.nlHeroSub">Van sportscholen en topatleten tot Nederlandse defensiekazernes — al 45 jaar de betrouwbare keuze.</p>
+  </div>
+  <div class="page-hero-clip" aria-hidden="true"></div>
+</div>
+
+<section class="section" aria-labelledby="refs-h">
+  <div class="wrap">
+
+    <!-- Tab toggle -->
+    <div class="ref-tabs-wrap">
+      <div class="ref-tabs" role="tablist" aria-label="Categorie kiezen">
+        <button type="button" class="ref-tab-btn active" role="tab" aria-selected="true" aria-controls="panel-gyms" id="tab-gyms" onclick="switchTab('gyms')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 5v14"/><path d="M18 5v14"/><path d="M6 12h12"/><circle cx="6" cy="5" r="2"/><circle cx="6" cy="19" r="2"/><circle cx="18" cy="5" r="2"/><circle cx="18" cy="19" r="2"/></svg>
+          <span data-i18n="refs.tabGyms">Sportscholen &amp; Gyms</span>
+        </button>
+        <button type="button" class="ref-tab-btn" role="tab" aria-selected="false" aria-controls="panel-kaz" id="tab-kaz" onclick="switchTab('kaz')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span data-i18n="refs.tabKaz">Nederlandse Kazernes</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Panel: Sportscholen -->
+    <div id="panel-gyms" class="ref-panel" role="tabpanel" aria-labelledby="tab-gyms">
+      <div class="text-center ref-panel-header">
+        <span class="label reveal" data-i18n="refs.label">Projecten</span>
+        <h2 class="h2 reveal d1" id="refs-h" data-i18n="refs.tabGyms">Sportscholen &amp; Gyms</h2>
+        <p class="sub sub--center reveal d2" data-i18n="refs.nlPanelSub">Meer dan 100 sportclubs door heel Nederland vertrouwen op Spanvloeren.</p>
+      </div>
+      <div class="refs-grid">
+        <div class="ref-card reveal d1"><div class="ref-num">01</div><div class="ref-body"><h4>Pancration Gym</h4><p>Nederland</p><span class="ref-tag">Spanvloer</span></div></div>
+        <div class="ref-card reveal d2"><div class="ref-num">02</div><div class="ref-body"><h4>Team Gennep</h4><p>Gennep</p><span class="ref-tag">Spanvloer</span></div></div>
+        <div class="ref-card reveal d3"><div class="ref-num">03</div><div class="ref-body"><h4>Haven BJJ</h4><p>Rotterdam</p><span class="ref-tag">Spanvloer</span></div></div>
+
+        <div class="ref-card reveal d1"><div class="ref-num">04</div><div class="ref-body"><h4>Dwin's Boxing Club</h4><p>Nederland</p><span class="ref-tag">Spanvloer + Logo</span></div></div>
+        <div class="ref-card reveal d2"><div class="ref-num">05</div><div class="ref-body"><h4>Burning Heart</h4><p>Hilversum</p><span class="ref-tag">Spanvloer + Logo</span></div></div>
+        <div class="ref-card reveal d3"><div class="ref-num">06</div><div class="ref-body"><h4>Energia BJJ</h4><p>Nijmegen</p><span class="ref-tag">Spanvloer</span></div></div>
+
+        <div class="ref-card reveal d1"><div class="ref-num">07</div><div class="ref-body"><h4>Spa</h4><p>Eindhoven</p><span class="ref-tag">Spanvloer</span></div></div>
+        <div class="ref-card reveal d2"><div class="ref-num">08</div><div class="ref-body"><h4>Lawa's Gym</h4><p>Ede</p><span class="ref-tag">Spanvloer</span></div></div>
+        <div class="ref-card reveal d3"><div class="ref-num">09</div><div class="ref-body"><h4>Van der Valk</h4><p>Amersfoort</p><span class="ref-tag">Spanvloer</span></div></div>
+
+        <div class="ref-card reveal d1"><div class="ref-num">10</div><div class="ref-body"><h4>Budokai Wor</h4><p>Nederland</p><span class="ref-tag">Spanvloer</span></div></div>
+        <div class="ref-card reveal d2"><div class="ref-num">11</div><div class="ref-body"><h4>Hart4Health</h4><p>Nederland</p><span class="ref-tag">Spanvloer</span></div></div>
+        <div class="ref-card reveal d3"><div class="ref-num">12</div><div class="ref-body"><h4>Elevation Gym</h4><p>Nederland</p><span class="ref-tag">Spanvloer</span></div></div>
+
+        <div class="ref-card reveal d1"><div class="ref-num">13</div><div class="ref-body"><h4>Fit with Mus</h4><p>Nederland</p><span class="ref-tag">Spanvloer</span></div></div>
+        <div class="ref-card reveal d2"><div class="ref-num">14</div><div class="ref-body"><h4>Angelo Gym</h4><p>Enschede</p><span class="ref-tag">Spanvloer</span></div></div>
+        <div class="ref-card reveal d3"><div class="ref-num">15</div><div class="ref-body"><h4>Chris Dolman</h4><p>Nederland</p><span class="ref-tag">Spanvloer</span></div></div>
+
+        <div class="ref-card reveal d1"><div class="ref-num">16</div><div class="ref-body"><h4>Unleash PT</h4><p>Nederland</p><span class="ref-tag">Spanvloer</span></div></div>
+        <div class="ref-card reveal d2"><div class="ref-num">17</div><div class="ref-body"><h4>MB-ALL</h4><p>Nederland</p><span class="ref-tag">Spanvloer</span></div></div>
+        <div class="ref-card reveal d3"><div class="ref-num">18</div><div class="ref-body"><h4>Politie Academie</h4><p>Nederland</p><span class="ref-tag">Spanvloer</span></div></div>
+
+        <div class="ref-card reveal d1"><div class="ref-num">19</div><div class="ref-body"><h4>Fight Team</h4><p>Nederland</p><span class="ref-tag">Spanvloer</span></div></div>
+        <div class="ref-card reveal d2"><div class="ref-num">20</div><div class="ref-body"><h4>Goodings Gym</h4><p>Nederland</p><span class="ref-tag">Spanvloer</span></div></div>
+        <div class="ref-card reveal d3"><div class="ref-num">21</div><div class="ref-body"><h4>Kai Muay Family</h4><p>Leeuwarden</p><span class="ref-tag">Spanvloer + Boksring</span></div></div>
+
+        <div class="ref-card reveal d1"><div class="ref-num">22</div><div class="ref-body"><h4>Fuijiyama Gym</h4><p>'s-Hertogenbosch</p><span class="ref-tag">Spanvloer</span></div></div>
+        <div class="ref-card reveal d2"><div class="ref-num">23</div><div class="ref-body"><h4>Fukuyama Gym</h4><p>Nederland</p><span class="ref-tag">Spanvloer</span></div></div>
+        <div class="ref-card reveal d3"><div class="ref-num">24</div><div class="ref-body"><h4>The Boxing Arena</h4><p>Nederland</p><span class="ref-tag">Spanvloer</span></div></div>
+
+        <div class="ref-card reveal d1"><div class="ref-num">25</div><div class="ref-body"><h4>4thGym</h4><p>IJburg, Amsterdam</p><span class="ref-tag">Spanvloer + Logo</span></div></div>
+        <div class="ref-card reveal d2"><div class="ref-num">26</div><div class="ref-body"><h4>PTBoxing</h4><p>Amsterdam</p><span class="ref-tag">Spanvloer</span></div></div>
+        <div class="ref-card reveal d3"><div class="ref-num">27</div><div class="ref-body"><h4>Andy Souwer</h4><p>'s-Hertogenbosch</p><span class="ref-tag">Spanvloer + Boksring</span></div></div>
+
+        <div class="ref-card reveal d1"><div class="ref-num">28</div><div class="ref-body"><h4>FloydFit</h4><p>Oegstgeest</p><span class="ref-tag">Spanvloer</span></div></div>
+        <div class="ref-card reveal d2"><div class="ref-num">29</div><div class="ref-body"><h4>Elements BJJ & Karate</h4><p>Capelle a/d IJssel</p><span class="ref-tag">Spanvloer</span></div></div>
+        <div class="ref-card reveal d3"><div class="ref-num">30</div><div class="ref-body"><h4>Brasa Team – Wim Deputter</h4><p>Leuven</p><span class="ref-tag">Spanvloer</span></div></div>
+
+        <div class="ref-card reveal d1"><div class="ref-num">31</div><div class="ref-body"><h4>Sparck Sportclub</h4><p>Eindhoven</p><span class="ref-tag">Spanvloer</span></div></div>
+        <div class="ref-card reveal d2"><div class="ref-num">32</div><div class="ref-body"><h4>Kickboxing University</h4><p>Nederland</p><span class="ref-tag">Spanvloer</span></div></div>
+        <div class="ref-card reveal d3"><div class="ref-num">33</div><div class="ref-body"><h4>Missiegericht</h4><p>Nederland</p><span class="ref-tag">Spanvloer</span></div></div>
+
+        <div class="ref-card reveal d1"><div class="ref-num">34</div><div class="ref-body"><h4>Tony's Boxing Boutique</h4><p>Naaldwijk</p><span class="ref-tag">Spanvloer</span></div></div>
+        <div class="ref-card reveal d2"><div class="ref-num">35</div><div class="ref-body"><h4>BOA Opleiding</h4><p>Houten</p><span class="ref-tag">Spanvloer</span></div></div>
+        <div class="ref-card reveal d3"><div class="ref-num">36</div><div class="ref-body"><h4>Ronde 2</h4><p>Purmerend</p><span class="ref-tag">Spanvloer</span></div></div>
+
+        <div class="ref-card reveal d1"><div class="ref-num">37</div><div class="ref-body"><h4>Daan Sport</h4><p>Haarlem</p><span class="ref-tag">Spanvloer</span></div></div>
+        <div class="ref-card reveal d2"><div class="ref-num">38</div><div class="ref-body"><h4>Murthel Groenhart</h4><p>Nederland</p><span class="ref-tag">Spanvloer</span></div></div>
+        <div class="ref-card reveal d3"><div class="ref-num">39</div><div class="ref-body"><h4>Mo Medi Mason</h4><p>Nederland</p><span class="ref-tag">Spanvloer</span></div></div>
+
+        <div class="ref-card reveal d1"><div class="ref-num">40</div><div class="ref-body"><h4>JSC Toptraining</h4><p>Nederland</p><span class="ref-tag">Spanvloer</span></div></div>
+        <div class="ref-card reveal d2"><div class="ref-num">41</div><div class="ref-body"><h4>Ubeda Gym</h4><p>Nijmegen</p><span class="ref-tag">Spanvloer + Logo</span></div></div>
+        <div class="ref-card reveal d3"><div class="ref-num">42</div><div class="ref-body"><h4>Spally's</h4><p>Amsterdam</p><span class="ref-tag">Spanvloer</span></div></div>
+
+        <div class="ref-card reveal d1"><div class="ref-num">43</div><div class="ref-body"><h4>Fightmasters</h4><p>Almere</p><span class="ref-tag">Spanvloer</span></div></div>
+        <div class="ref-card reveal d2"><div class="ref-num">44</div><div class="ref-body"><h4>Hemmers Gym</h4><p>Breda</p><span class="ref-tag">Spanvloer + Logo</span></div></div>
+        <div class="ref-card reveal d3"><div class="ref-num">45</div><div class="ref-body"><h4>ALB Gym</h4><p>Almere</p><span class="ref-tag">Spanvloer</span></div></div>
+
+        <div class="ref-card reveal d1"><div class="ref-num">46</div><div class="ref-body"><h4>Shape Club</h4><p>Rotterdam</p><span class="ref-tag">Spanvloer</span></div></div>
+        <div class="ref-card reveal d2"><div class="ref-num">47</div><div class="ref-body"><h4>Caster Troter</h4><p>Bloemendaal</p><span class="ref-tag">Rubber Interlock</span></div></div>
+        <div class="ref-card reveal d3"><div class="ref-num">48</div><div class="ref-body"><h4>Sandow</h4><p>Arnhem</p><span class="ref-tag">Spanvloer</span></div></div>
+
+        <div class="ref-card reveal d1"><div class="ref-num">49</div><div class="ref-body"><h4>Punch Women's Health</h4><p>Rotterdam</p><span class="ref-tag">Spanvloer</span></div></div>
+        <div class="ref-card reveal d2"><div class="ref-num">50</div><div class="ref-body"><h4>Krav Magma</h4><p>Nederland</p><span class="ref-tag">Spanvloer</span></div></div>
+        <div class="ref-card reveal d3"><div class="ref-num">51</div><div class="ref-body"><h4>Nicky Holzken</h4><p>Helmond</p><span class="ref-tag">Spanvloer</span></div></div>
+
+        <div class="ref-card reveal d1"><div class="ref-num">52</div><div class="ref-body"><h4>Fightclub</h4><p>Huizen</p><span class="ref-tag">Spanvloer</span></div></div>
+        <div class="ref-card reveal d2"><div class="ref-num">53</div><div class="ref-body"><h4>Sam's Fit Gym</h4><p>Bunnik</p><span class="ref-tag">Spanvloer</span></div></div>
+        <div class="ref-card reveal d3"><div class="ref-num">54</div><div class="ref-body"><h4>Eagle Gym</h4><p>Nederland</p><span class="ref-tag">Spanvloer</span></div></div>
+
+        <div class="ref-card reveal d1"><div class="ref-num">55</div><div class="ref-body"><h4>Elite Training Center</h4><p>Nederland</p><span class="ref-tag">Spanvloer</span></div></div>
+        <div class="ref-card reveal d2"><div class="ref-num">56</div><div class="ref-body"><h4>Sportcentrum Spijkenisse</h4><p>Spijkenisse</p><span class="ref-tag">Spanvloer</span></div></div>
+        <div class="ref-card reveal d3"><div class="ref-num">57</div><div class="ref-body"><h4>Fladir Chahbari</h4><p>Nederland</p><span class="ref-tag">Spanvloer</span></div></div>
+
+        <div class="ref-card reveal d1"><div class="ref-num">58</div><div class="ref-body"><h4>Tommy Hilfiger Bedrijvenpark</h4><p>Nederland</p><span class="ref-tag">Spanvloer</span></div></div>
+        <div class="ref-card reveal d2"><div class="ref-num">59</div><div class="ref-body"><h4>USC Club West</h4><p>Amsterdam</p><span class="ref-tag">Spanvloer</span></div></div>
+        <div class="ref-card reveal d3"><div class="ref-num">60</div><div class="ref-body"><h4>Maass Martial Arts Centrum</h4><p>Helmond</p><span class="ref-tag">Spanvloer</span></div></div>
+
+        <div class="ref-card reveal d1"><div class="ref-num">61</div><div class="ref-body"><h4>Bodyvit</h4><p>Bergen</p><span class="ref-tag">Spanvloer + Rubber + Logo</span></div></div>
+        <div class="ref-card reveal d2"><div class="ref-num">62</div><div class="ref-body"><h4>Impact Fit</h4><p>Utrecht</p><span class="ref-tag">Wandbekleding</span></div></div>
+        <div class="ref-card reveal d3"><div class="ref-num">63</div><div class="ref-body"><h4>Gym Kras</h4><p>Volendam</p><span class="ref-tag">Spanvloer</span></div></div>
+
+        <div class="ref-card reveal d1"><div class="ref-num">64</div><div class="ref-body"><h4>Levels</h4><p>Breda</p><span class="ref-tag">Bokszak Standaard</span></div></div>
+        <div class="ref-card reveal d2"><div class="ref-num">65</div><div class="ref-body"><h4>Vondel Gym</h4><p>Amsterdam</p><span class="ref-tag">Boksring</span></div></div>
+        <div class="ref-card reveal d3"><div class="ref-num">66</div><div class="ref-body"><h4>Freddy's Gym</h4><p>Amsterdam</p><span class="ref-tag">Spanvloer</span></div></div>
+
+        <div class="ref-card reveal d1"><div class="ref-num">67</div><div class="ref-body"><h4>Sportcentrum Atlas</h4><p>Volendam</p><span class="ref-tag">Spanvloer + Rubber</span></div></div>
+        <div class="ref-card reveal d2"><div class="ref-num">68</div><div class="ref-body"><h4>Brazilian Jiu Jitsu</h4><p>Leiden</p><span class="ref-tag">Spanvloer</span></div></div>
+        <div class="ref-card reveal d3"><div class="ref-num">69</div><div class="ref-body"><h4>Remy Bonjasky</h4><p>Nederland</p><span class="ref-tag">Muurbekleding</span></div></div>
+
+        <div class="ref-card reveal d1"><div class="ref-num">70</div><div class="ref-body"><h4>Sin City Boxing</h4><p>Amsterdam</p><span class="ref-tag">Boksring</span></div></div>
+        <div class="ref-card reveal d2"><div class="ref-num">71</div><div class="ref-body"><h4>Elevation Jiu Jutsu</h4><p>Utrecht</p><span class="ref-tag">Spanvloer + Muurbekleding</span></div></div>
+        <div class="ref-card reveal d3"><div class="ref-num">72</div><div class="ref-body"><h4>'t Klaslokaal</h4><p>Bloemendaal</p><span class="ref-tag">Schilderwerk</span></div></div>
+
+        <div class="ref-card reveal d1"><div class="ref-num">73</div><div class="ref-body"><h4>Sportschool</h4><p>Leiderdorp</p><span class="ref-tag">Wandbekleding</span></div></div>
+        <div class="ref-card reveal d2"><div class="ref-num">74</div><div class="ref-body"><h4>Zadero Training</h4><p>Hedel</p><span class="ref-tag">Spanvloer</span></div></div>
+        <div class="ref-card reveal d3"><div class="ref-num">75</div><div class="ref-body"><h4>Budofabriek</h4><p>Arkel</p><span class="ref-tag">Spanvloer</span></div></div>
+
+        <div class="ref-card reveal d1"><div class="ref-num">76</div><div class="ref-body"><h4>Tabonon Gym</h4><p>Zwolle</p><span class="ref-tag">Spanvloer</span></div></div>
+        <div class="ref-card reveal d2"><div class="ref-num">77</div><div class="ref-body"><h4>Kassem Gym</h4><p>Alphen aan den Rijn</p><span class="ref-tag">Spanvloer + Logo</span></div></div>
+        <div class="ref-card reveal d3"><div class="ref-num">78</div><div class="ref-body"><h4>Holland Factory</h4><p>Westmaas</p><span class="ref-tag">Spanvloer</span></div></div>
+
+        <div class="ref-card reveal d1"><div class="ref-num">79</div><div class="ref-body"><h4>Body Industrie</h4><p>Abcoude</p><span class="ref-tag">Spanvloer</span></div></div>
+        <div class="ref-card reveal d2"><div class="ref-num">80</div><div class="ref-body"><h4>Ready2Rumble</h4><p>Amsterdam</p><span class="ref-tag">Spanvloer</span></div></div>
+        <div class="ref-card reveal d3"><div class="ref-num">81</div><div class="ref-body"><h4>Quin Gym</h4><p>Venray</p><span class="ref-tag">Spanvloer</span></div></div>
+
+        <div class="ref-card reveal d1"><div class="ref-num">82</div><div class="ref-body"><h4>Family Fit</h4><p>Leerdam</p><span class="ref-tag">Spanvloer</span></div></div>
+        <div class="ref-card reveal d2"><div class="ref-num">83</div><div class="ref-body"><h4>Kooistee</h4><p>Hellevoetsluis</p><span class="ref-tag">Spanvloer + Logo</span></div></div>
+        <div class="ref-card reveal d3"><div class="ref-num">84</div><div class="ref-body"><h4>Rocky Fit</h4><p>Apeldoorn</p><span class="ref-tag">Spanvloer + Logo</span></div></div>
+
+        <div class="ref-card reveal d1"><div class="ref-num">85</div><div class="ref-body"><h4>Honu Boxing</h4><p>Heemstede</p><span class="ref-tag">Spanvloer</span></div></div>
+        <div class="ref-card reveal d2"><div class="ref-num">86</div><div class="ref-body"><h4>Eastbound Gym</h4><p>Amsterdam</p><span class="ref-tag">Spanvloer + Logo</span></div></div>
+        <div class="ref-card reveal d3"><div class="ref-num">87</div><div class="ref-body"><h4>Duncan Training Center</h4><p>Utrecht</p><span class="ref-tag">Spanvloer</span></div></div>
+
+        <div class="ref-card reveal d1"><div class="ref-num">88</div><div class="ref-body"><h4>Healthclubnu</h4><p>Heemstede</p><span class="ref-tag">Spanvloer</span></div></div>
+        <div class="ref-card reveal d2"><div class="ref-num">89</div><div class="ref-body"><h4>Kassen Gym</h4><p>Nederland</p><span class="ref-tag">Spanvloer + Logo</span></div></div>
+        <div class="ref-card reveal d3"><div class="ref-num">90</div><div class="ref-body"><h4>COB Nijmegen</h4><p>Nijmegen</p><span class="ref-tag">Canvas Boksring</span></div></div>
+
+        <div class="ref-card reveal d1"><div class="ref-num">91</div><div class="ref-body"><h4>Amsterdamsche Boksschool</h4><p>Amsterdam</p><span class="ref-tag">Boksring</span></div></div>
+        <div class="ref-card reveal d2"><div class="ref-num">92</div><div class="ref-body"><h4>Sinner Skibrillen</h4><p>Nederland</p><span class="ref-tag">Spanvloer</span></div></div>
+        <div class="ref-card reveal d3"><div class="ref-num">93</div><div class="ref-body"><h4>Boxing Opdam</h4><p>Roelandsarendveen</p><span class="ref-tag">Boksring</span></div></div>
+
+        <div class="ref-card reveal d1"><div class="ref-num">94</div><div class="ref-body"><h4>Leon's Boxing Gym</h4><p>Nederland</p><span class="ref-tag">Boksring</span></div></div>
+        <div class="ref-card reveal d2"><div class="ref-num">95</div><div class="ref-body"><h4>Van 't Hof</h4><p>Rotterdam</p><span class="ref-tag">Boksring</span></div></div>
+        <div class="ref-card reveal d3"><div class="ref-num">96</div><div class="ref-body"><h4>Caster Interlock</h4><p>Hoofddorp</p><span class="ref-tag">Rubber Interlock</span></div></div>
+
+        <div class="ref-card reveal d1"><div class="ref-num">97</div><div class="ref-body"><h4>Peter Aerts</h4><p>Nederland</p><span class="ref-tag">Privé Dojo</span></div></div>
+        <div class="ref-card reveal d2"><div class="ref-num">98</div><div class="ref-body"><h4>Cody Gakpo</h4><p>Eindhoven</p><span class="ref-tag">Spanvloer</span></div></div>
+        <div class="ref-card reveal d3"><div class="ref-num">99</div><div class="ref-body"><h4>Missiegericht</h4><p>Nederland</p><span class="ref-tag">Spanvloer</span></div></div>
+      </div>
+    </div>
+
+    <!-- Panel: Kazernes -->
+    <div id="panel-kaz" class="ref-panel hidden" role="tabpanel" aria-labelledby="tab-kaz">
+
+      <!-- Intro banner -->
+      <div class="kaz-banner reveal">
+        <div class="kaz-banner-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div class="kaz-banner-text">
+          <h3 data-i18n="refs.kazBannerTitle">Officieel leverancier Nederlandse Defensie</h3>
+          <p data-i18n="refs.kazBannerSub">Spanvloeren.nl heeft meerdere Nederlandse kazernes en defensielocaties voorzien van professionele vechtsporten spanvloeren. Onze vloeren zijn bewezen in de zwaarste trainingsomgevingen.</p>
+        </div>
+      </div>
+
+      <!-- Kazerne cards -->
+      <div class="kaz-grid">
+
+        <div class="kaz-card reveal d1">
+          <div class="kaz-shield">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="kaz-body">
+            <p class="kaz-label" data-i18n="refs.kazLabel">Defensie</p>
+            <h3 class="kaz-name">Ghent Kazerne</h3>
+            <p class="kaz-loc">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+              Rotterdam
+            </p>
+            <span class="kaz-tag">Spanvloer</span>
+          </div>
+        </div>
+
+        <div class="kaz-card reveal d2">
+          <div class="kaz-shield">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="kaz-body">
+            <p class="kaz-label" data-i18n="refs.kazLabel">Defensie</p>
+            <h3 class="kaz-name">Defensie Kazerne</h3>
+            <p class="kaz-loc">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+              Schaarsbergen
+            </p>
+            <span class="kaz-tag">Spanvloer</span>
+          </div>
+        </div>
+
+        <div class="kaz-card reveal d3">
+          <div class="kaz-shield">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="kaz-body">
+            <p class="kaz-label" data-i18n="refs.kazLabel">Defensie</p>
+            <h3 class="kaz-name">Bernhardt Kazerne</h3>
+            <p class="kaz-loc">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+              Nederland
+            </p>
+            <span class="kaz-tag">Spanvloer</span>
+          </div>
+        </div>
+
+        <div class="kaz-card reveal d1">
+          <div class="kaz-shield">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="kaz-body">
+            <p class="kaz-label" data-i18n="refs.kazMarineLabel">Koninklijke Marine</p>
+            <h3 class="kaz-name">Mariniers Kazerne</h3>
+            <p class="kaz-loc">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+              Den Helder
+            </p>
+            <span class="kaz-tag">Spanvloer</span>
+          </div>
+        </div>
+
+        <div class="kaz-card reveal d2">
+          <div class="kaz-shield">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="kaz-body">
+            <p class="kaz-label" data-i18n="refs.kazLabel">Defensie</p>
+            <h3 class="kaz-name">De Oranje Kazerne</h3>
+            <p class="kaz-loc">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+              Schaarsbergen
+            </p>
+            <span class="kaz-tag">Spanvloer</span>
+          </div>
+        </div>
+
+        <div class="kaz-card reveal d3">
+          <div class="kaz-shield">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="kaz-body">
+            <p class="kaz-label" data-i18n="refs.kazLabel">Defensie</p>
+            <h3 class="kaz-name">De Bernard Kazerne</h3>
+            <p class="kaz-loc">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+              Amersfoort
+            </p>
+            <span class="kaz-tag">Spanvloer + Rubber</span>
+          </div>
+        </div>
+
+        <div class="kaz-card reveal d1">
+          <div class="kaz-shield">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="kaz-body">
+            <p class="kaz-label" data-i18n="refs.kazLabel">Defensie</p>
+            <h3 class="kaz-name">Defensie Oranje Kazerne</h3>
+            <p class="kaz-loc">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+              Schaarsbergen
+            </p>
+            <span class="kaz-tag">Spanvloer</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="cta-strip"><div class="wrap"><div class="cta-strip-inner reveal">
+  <div><h2 data-i18n="refs.nlCtaTitle">Klaar om te Beginnen?</h2><p data-i18n="refs.nlCtaSub">Vraag vrijblijvend een offerte aan voor uw sportschool of locatie.</p></div>
+  <a href="/contact.html" class="btn-white" data-i18n="nav.cta">Offerte Aanvragen</a>
+</div></div></div>
+
+<div id="footer-placeholder"></div>
+<script src="/assets/js/i18n.js?v=24"></script><script src="/assets/js/main.js?v=24"></script>
+<script>
+function switchTab(tab) {
+  document.getElementById('panel-gyms').classList.toggle('hidden', tab !== 'gyms');
+  document.getElementById('panel-kaz').classList.toggle('hidden', tab !== 'kaz');
+  document.getElementById('tab-gyms').classList.toggle('active', tab === 'gyms');
+  document.getElementById('tab-gyms').setAttribute('aria-selected', tab === 'gyms');
+  document.getElementById('tab-kaz').classList.toggle('active', tab === 'kaz');
+  document.getElementById('tab-kaz').setAttribute('aria-selected', tab === 'kaz');
+}
+</script>
+</body></html>
+
+
+

@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="nl" id="html">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rubber Free Weight Matten – Sportvloeren | Spanvloeren.nl</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/css/style.css?v=24" />
+  <style>
+    @keyframes slideUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes slideLeft{from{opacity:0;transform:translateX(-40px)}to{opacity:1;transform:translateX(0)}}
+    @keyframes slideRight{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:translateX(0)}}
+    @keyframes numberPop{from{opacity:0;transform:scale(.7)}to{opacity:1;transform:scale(1)}}
+    @keyframes weightDrop{0%{opacity:0;transform:translateY(-32px)}60%{opacity:1;transform:translateY(4px)}80%{transform:translateY(-3px)}100%{opacity:1;transform:translateY(0)}}
+    @keyframes ripple{0%{transform:scale(.4);opacity:.7}100%{transform:scale(2.2);opacity:0}}
+    @keyframes barGrow{from{width:0}to{width:var(--w)}}
+    @keyframes layerRise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+    .rb-vis .anim-up{animation:slideUp .65s var(--ease) both}
+    .rb-vis .anim-left{animation:slideLeft .65s var(--ease) both}
+    .rb-vis .anim-right{animation:slideRight .65s var(--ease) both}
+    .rb-vis .num-anim{animation:numberPop .55s cubic-bezier(.34,1.56,.64,1) both}
+    .rb-vis .drop-anim{animation:weightDrop .7s cubic-bezier(.34,1.56,.64,1) both}
+    .rb-vis .ripple-anim{animation:ripple 1.2s ease-out both}
+    .rb-vis .bar-grow{animation:barGrow .8s cubic-bezier(.4,0,.2,1) both;animation-fill-mode:both}
+    .rb-vis .layer-anim{animation:layerRise .5s var(--ease) both}
+    .d1{animation-delay:.05s}.d2{animation-delay:.15s}.d3{animation-delay:.25s}
+    .d4{animation-delay:.35s}.d5{animation-delay:.45s}.d6{animation-delay:.55s}
+    .d7{animation-delay:.65s}.d8{animation-delay:.75s}
+
+    /* ── Intro layout ── */
+    .rb-intro{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center}
+    .rb-intro-text p{font-size:16px;color:var(--muted);line-height:1.75;margin-bottom:14px}
+
+    /* ── Impact visual ── */
+    .rb-impact-label{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+    .rb-impact-scene{background:var(--black);border-radius:16px;padding:40px 32px 32px;position:relative;overflow:hidden}
+    .rb-impact-scene::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 28px,rgba(255,255,255,.03) 28px,rgba(255,255,255,.03) 29px),repeating-linear-gradient(90deg,transparent,transparent 28px,rgba(255,255,255,.03) 28px,rgba(255,255,255,.03) 29px)}
+    .rb-drop-zone{display:flex;flex-direction:column;align-items:center;gap:0;position:relative;padding-bottom:8px}
+    .rb-weight-wrap{position:relative;display:flex;flex-direction:column;align-items:center;margin-bottom:16px}
+    .rb-weight-plate{width:88px;height:88px;border-radius:50%;background:linear-gradient(145deg,#3a3a3a,#1a1a1a);border:6px solid #555;display:flex;align-items:center;justify-content:center;position:relative;z-index:2}
+    .rb-weight-hole{width:20px;height:20px;border-radius:50%;background:#111;border:3px solid #444}
+    .rb-arrow{width:2px;height:36px;background:linear-gradient(to bottom,transparent,var(--red));margin-bottom:4px;position:relative}
+    .rb-arrow::after{content:'';position:absolute;bottom:-1px;left:50%;transform:translateX(-50%);border-left:6px solid transparent;border-right:6px solid transparent;border-top:10px solid var(--red)}
+    .rb-ripple-wrap{position:relative;width:200px;height:40px;display:flex;align-items:center;justify-content:center;margin-top:4px}
+    .rb-ripple{position:absolute;width:60px;height:16px;border-radius:50%;border:2px solid var(--red);opacity:0}
+    .rb-ripple--1{animation-delay:.7s!important}
+    .rb-ripple--2{animation-delay:.9s!important;width:100px;height:24px}
+    .rb-ripple--3{animation-delay:1.1s!important;width:140px;height:32px}
+    .rb-mat-layers{margin-top:12px;border-radius:10px;overflow:hidden;border:1.5px solid rgba(255,255,255,.1);width:100%}
+    .rb-mat-layer{display:flex;align-items:center;justify-content:space-between;padding:10px 16px}
+    .rb-mat-layer--rubber{background:#2a1a1a;border-bottom:1px solid rgba(255,255,255,.07)}
+    .rb-mat-layer--sub{background:#1a1a1a}
+    .rb-mat-layer-name{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#fff}
+    .rb-mat-layer-desc{font-size:11px;color:rgba(255,255,255,.45);margin-top:2px}
+    .rb-mat-layer-badge{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;color:var(--red);background:rgba(230,57,70,.12);padding:3px 10px;border-radius:12px}
+    .rb-mat-layer--sub .rb-mat-layer-badge{color:rgba(255,255,255,.4);background:rgba(255,255,255,.05)}
+    .rb-impact-caption{font-size:12px;color:rgba(255,255,255,.35);text-align:center;margin-top:16px;font-style:italic}
+
+    /* ── Stats strip ── */
+    .rb-stats{background:var(--black);padding:56px 0}
+    .rb-stats-grid{display:grid;grid-template-columns:repeat(3,1fr);text-align:center}
+    .rb-stat{padding:0 32px;position:relative}
+    .rb-stat+.rb-stat::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:1px;height:48px;background:rgba(255,255,255,.1)}
+    .rb-stat-val{font-family:'Barlow Condensed',sans-serif;font-size:clamp(48px,6vw,72px);font-weight:900;line-height:.9;color:#fff}
+    .rb-stat-val em{color:var(--red);font-style:normal}
+    .rb-stat-label{font-size:13px;color:rgba(255,255,255,.4);margin-top:10px;letter-spacing:.5px}
+
+    /* ── Sports marquee ── */
+    .rb-sports-wrap{background:var(--red);padding:22px 0;overflow:hidden}
+    .rb-sports-track{display:flex;animation:marquee 24s linear infinite;width:max-content}
+    .rb-sport-item{display:flex;align-items:center;gap:20px;padding:0 20px;flex-shrink:0}
+    .rb-sport-name{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;text-transform:uppercase;letter-spacing:2px;color:#fff;white-space:nowrap}
+    .rb-sport-dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.5);flex-shrink:0}
+
+    /* ── Thickness section ── */
+    .rb-thick-intro{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start}
+    .rb-thick-text p{font-size:16px;color:var(--muted);line-height:1.75;margin-bottom:14px}
+    .rb-diagram-label{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+    .rb-thick-row{display:flex;align-items:center;gap:16px;margin-bottom:16px}
+    .rb-thick-label{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;color:var(--black);min-width:52px}
+    .rb-thick-bar-wrap{flex:1;height:8px;background:var(--gray);border-radius:4px;overflow:hidden}
+    .rb-thick-bar{height:100%;background:var(--red);border-radius:4px;width:0}
+    .rb-vis .rb-thick-bar{animation:barGrow .8s cubic-bezier(.4,0,.2,1) both}
+    .rb-thick-bar--1{--w:33%}.rb-thick-bar--15{--w:50%}.rb-thick-bar--2{--w:67%}.rb-thick-bar--3{--w:100%}
+    .rb-vis .rb-thick-bar{width:var(--w)}
+    .rb-thick-sport{font-size:13px;color:var(--muted);min-width:140px;text-align:right}
+
+    /* ── Features ── */
+    .rb-feat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:52px}
+    .rb-feat{background:#fff;border-radius:14px;border:1.5px solid var(--gray);padding:32px;display:flex;gap:20px;align-items:flex-start;transition:border-color 220ms,box-shadow 220ms;cursor:default}
+    .rb-feat:hover{border-color:var(--red);box-shadow:0 6px 28px rgba(230,57,70,.1)}
+    .rb-feat-icon{width:44px;height:44px;border-radius:10px;background:rgba(230,57,70,.08);display:flex;align-items:center;justify-content:center;color:var(--red);flex-shrink:0}
+    .rb-feat h3{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;text-transform:uppercase;color:var(--black);margin-bottom:6px}
+    .rb-feat p{font-size:14px;color:var(--muted);line-height:1.6}
+
+    /* ── Install banner ── */
+    .rb-install{background:var(--black);border-radius:20px;padding:48px 52px;display:grid;grid-template-columns:1fr auto;gap:40px;align-items:center;margin-top:48px}
+    .rb-install-label{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin-bottom:10px}
+    .rb-install h3{font-family:'Barlow Condensed',sans-serif;font-size:clamp(24px,3vw,34px);font-weight:900;text-transform:uppercase;color:#fff;line-height:1.1;margin-bottom:12px}
+    .rb-install p{font-size:15px;color:rgba(255,255,255,.55);line-height:1.65;max-width:520px}
+    .rb-install-checks{display:flex;flex-direction:column;gap:8px;margin-top:20px}
+    .rb-install-check{display:flex;align-items:center;gap:10px;font-size:14px;color:rgba(255,255,255,.7)}
+    .rb-install-check::before{content:'';width:18px;height:18px;border-radius:50%;background:rgba(230,57,70,.2);border:1.5px solid var(--red);flex-shrink:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23e63946' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");background-size:12px;background-repeat:no-repeat;background-position:center}
+
+    @media(max-width:900px){
+      .rb-intro{grid-template-columns:1fr;gap:40px}
+      .rb-stats-grid{grid-template-columns:1fr;gap:36px}
+      .rb-stat+.rb-stat::before{display:none}
+      .rb-thick-intro{grid-template-columns:1fr;gap:40px}
+      .rb-feat-grid{grid-template-columns:1fr}
+      .rb-install{grid-template-columns:1fr;gap:24px}
+    }
+  </style>
+</head>
+<body class="subpage">
+<div id="nav-placeholder"></div>
+
+<!-- ── Hero ── -->
+<div class="page-hero" aria-labelledby="ph1">
+  <div class="page-hero-bg" aria-hidden="true"></div>
+  <div class="page-hero-accent" aria-hidden="true"></div>
+  <div class="wrap page-hero-content">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a><span class="breadcrumb-sep" aria-hidden="true">›</span>
+      <a href="/sportvloeren/spanvloeren.html">Sportvloeren</a><span class="breadcrumb-sep" aria-hidden="true">›</span>
+      <span class="current">Rubber Vloeren</span>
+    </nav>
+    <span class="label" data-i18n="rubber.heroLabel">Sportvloeren</span>
+    <h1 id="ph1" data-i18n="rubber.heroTitle">Rubber<br>Free Weight Matten</h1>
+    <p class="sub" data-i18n="rubber.heroSub">Speciaal voor de zwaarste trainingszone — absorbeert de klap van vallende gewichten, session na session.</p>
+  </div>
+  <div class="page-hero-clip" aria-hidden="true"></div>
+</div>
+
+<!-- ── Intro + impact visual ── -->
+<section class="section rb-section" aria-labelledby="intro-h">
+  <div class="wrap">
+    <div class="rb-intro">
+
+      <div class="rb-intro-text">
+        <span class="label anim-left d1" data-i18n="rubber.introTitle">Free Weight Zone</span>
+        <h2 class="h2 anim-left d2" id="intro-h" data-i18n="rubber.introH2">Gebouwd Voor<br>Het Zwaarste Gebruik</h2>
+        <p class="anim-left d3" data-i18n="rubber.introP1">Pro Budo 2000 Sportvloeren verkoopt en legt rubber Free Weight matten die in sportscholen worden gebruikt op plaatsen waar zware gewichten opvallen. Deze matten zijn speciaal ontwikkeld voor de intensiefste zone van elke gym.</p>
+        <p class="anim-left d4" data-i18n="rubber.introP2">Of het nu gaat om een kleine hoek met vrije gewichten of een complete CrossFit-vloer — wij leveren de juiste rubber mat voor uw situatie en verzorgen ook de professionele montage ter plaatse.</p>
+        <div class="mt-cta anim-left d5"><a href="/contact.html" class="btn btn-red" data-i18n="rubber.introBtn">Gratis Offerte Aanvragen</a></div>
+      </div>
+
+      <div class="anim-right d2">
+        <p class="rb-impact-label" data-i18n="rubber.impactLabel">Schokabsorptie in lagen</p>
+        <div class="rb-impact-scene">
+          <div class="rb-drop-zone">
+            <div class="rb-weight-wrap">
+              <div class="rb-weight-plate drop-anim d3" aria-hidden="true">
+                <div class="rb-weight-hole"></div>
+              </div>
+            </div>
+            <div class="rb-arrow" aria-hidden="true"></div>
+            <div class="rb-ripple-wrap" aria-hidden="true">
+              <div class="rb-ripple rb-ripple--1 ripple-anim d4"></div>
+              <div class="rb-ripple rb-ripple--2 ripple-anim d5"></div>
+              <div class="rb-ripple rb-ripple--3 ripple-anim d6"></div>
+            </div>
+            <div class="rb-mat-layers">
+              <div class="rb-mat-layer rb-mat-layer--rubber layer-anim d4">
+                <div>
+                  <div class="rb-mat-layer-name" data-i18n="rubber.matLayer1name">Rubber mat</div>
+                  <div class="rb-mat-layer-desc" data-i18n="rubber.matLayer1desc">Absorbeert schok &amp; geluid</div>
+                </div>
+                <div class="rb-mat-layer-badge" data-i18n="rubber.matLayer1badge">1–3 cm dik</div>
+              </div>
+              <div class="rb-mat-layer rb-mat-layer--sub layer-anim d5">
+                <div>
+                  <div class="rb-mat-layer-name" data-i18n="rubber.matLayer2name">Ondergrond</div>
+                  <div class="rb-mat-layer-desc" data-i18n="rubber.matLayer2desc">Blijft volledig beschermd</div>
+                </div>
+                <div class="rb-mat-layer-badge" data-i18n="rubber.matLayer2badge">onbeschadigd</div>
+              </div>
+            </div>
+            <p class="rb-impact-caption" data-i18n="rubber.impactCaption">Gewichten vallen — de vloer vangt op</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Stats strip ── -->
+<div class="rb-stats rb-section">
+  <div class="wrap">
+    <div class="rb-stats-grid">
+      <div class="rb-stat">
+        <div class="rb-stat-val num-anim d1">1<em>–</em>3<em>cm</em></div>
+        <div class="rb-stat-label" data-i18n="rubber.statLabel1">Beschikbare diktes voor elke belasting</div>
+      </div>
+      <div class="rb-stat">
+        <div class="rb-stat-val num-anim d2">100<em>%</em></div>
+        <div class="rb-stat-label" data-i18n="rubber.statLabel2">Rubber — maximale impact bescherming</div>
+      </div>
+      <div class="rb-stat">
+        <div class="rb-stat-val num-anim d3">2<em>×</em></div>
+        <div class="rb-stat-label" data-i18n="rubber.statLabel3">Levering én professionele montage</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Sports marquee ── -->
+<div class="rb-sports-wrap" aria-hidden="true">
+  <div class="rb-sports-track">
+    <div class="rb-sport-item"><span class="rb-sport-name">Free Weights</span><span class="rb-sport-dot"></span></div>
+    <div class="rb-sport-item"><span class="rb-sport-name">CrossFit</span><span class="rb-sport-dot"></span></div>
+    <div class="rb-sport-item"><span class="rb-sport-name">Gewichtheffen</span><span class="rb-sport-dot"></span></div>
+    <div class="rb-sport-item"><span class="rb-sport-name">Powerlifting</span><span class="rb-sport-dot"></span></div>
+    <div class="rb-sport-item"><span class="rb-sport-name">Fitness</span><span class="rb-sport-dot"></span></div>
+    <div class="rb-sport-item"><span class="rb-sport-name">Strongman</span><span class="rb-sport-dot"></span></div>
+    <div class="rb-sport-item"><span class="rb-sport-name">Functional Training</span><span class="rb-sport-dot"></span></div>
+    <div class="rb-sport-item"><span class="rb-sport-name">MMA</span><span class="rb-sport-dot"></span></div>
+    <div class="rb-sport-item"><span class="rb-sport-name">Free Weights</span><span class="rb-sport-dot"></span></div>
+    <div class="rb-sport-item"><span class="rb-sport-name">CrossFit</span><span class="rb-sport-dot"></span></div>
+    <div class="rb-sport-item"><span class="rb-sport-name">Gewichtheffen</span><span class="rb-sport-dot"></span></div>
+    <div class="rb-sport-item"><span class="rb-sport-name">Powerlifting</span><span class="rb-sport-dot"></span></div>
+    <div class="rb-sport-item"><span class="rb-sport-name">Fitness</span><span class="rb-sport-dot"></span></div>
+    <div class="rb-sport-item"><span class="rb-sport-name">Strongman</span><span class="rb-sport-dot"></span></div>
+    <div class="rb-sport-item"><span class="rb-sport-name">Functional Training</span><span class="rb-sport-dot"></span></div>
+    <div class="rb-sport-item"><span class="rb-sport-name">MMA</span><span class="rb-sport-dot"></span></div>
+  </div>
+</div>
+
+<!-- ── Thickness section ── -->
+<section class="section section--gray rb-section" aria-labelledby="thick-h">
+  <div class="wrap">
+    <div class="rb-thick-intro">
+
+      <div class="rb-thick-text">
+        <span class="label anim-left d1" data-i18n="rubber.thickLabel">Diktes &amp; Toepassingen</span>
+        <h2 class="h2 anim-left d2" id="thick-h" data-i18n="rubber.thickTitle">De Juiste Dikte<br>Voor Uw Zone</h2>
+        <p class="anim-left d3" data-i18n="rubber.thickP1">Niet elke hoek van uw gym vraagt om dezelfde bescherming. Wij helpen u de juiste dikte kiezen op basis van het gebruik van de ruimte — van lichte cardio tot het zwaarste powerlifting-geweld.</p>
+        <p class="anim-left d4" data-i18n="rubber.thickP2">De matten worden op maat geleverd en door ons vakkundig gelegd. U hoeft zelf niets te doen.</p>
+      </div>
+
+      <div class="anim-right d2">
+        <p class="rb-diagram-label" data-i18n="rubber.diagLabel">Dikte vs. belasting</p>
+        <div class="rb-thick-row rb-section">
+          <span class="rb-thick-label">1 cm</span>
+          <div class="rb-thick-bar-wrap"><div class="rb-thick-bar rb-thick-bar--1 d1"></div></div>
+          <span class="rb-thick-sport" data-i18n="rubber.sport1cm">Cardio, lichte fitness</span>
+        </div>
+        <div class="rb-thick-row rb-section">
+          <span class="rb-thick-label">1,5 cm</span>
+          <div class="rb-thick-bar-wrap"><div class="rb-thick-bar rb-thick-bar--15 d2"></div></div>
+          <span class="rb-thick-sport" data-i18n="rubber.sport15cm">Fitness, vrije gewichten</span>
+        </div>
+        <div class="rb-thick-row rb-section">
+          <span class="rb-thick-label">2 cm</span>
+          <div class="rb-thick-bar-wrap"><div class="rb-thick-bar rb-thick-bar--2 d3"></div></div>
+          <span class="rb-thick-sport" data-i18n="rubber.sport2cm">CrossFit, kettlebells</span>
+        </div>
+        <div class="rb-thick-row rb-section">
+          <span class="rb-thick-label">3 cm</span>
+          <div class="rb-thick-bar-wrap"><div class="rb-thick-bar rb-thick-bar--3 d4"></div></div>
+          <span class="rb-thick-sport" data-i18n="rubber.sport3cm">Heavy weight, powerlifting</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Features ── -->
+<section class="section rb-section" aria-labelledby="feat-h">
+  <div class="wrap">
+    <div class="text-center">
+      <span class="label anim-up d1" data-i18n="rubber.featLabel">Voordelen</span>
+      <h2 class="h2 anim-up d2" id="feat-h" data-i18n="rubber.featTitle">Waarom Rubber<br>Free Weight Matten?</h2>
+    </div>
+    <div class="rb-feat-grid">
+      <div class="rb-feat anim-up d1">
+        <div class="rb-feat-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div>
+          <h3 data-i18n="rubber.f1t">Maximale Schokabsorptie</h3>
+          <p data-i18n="rubber.f1b">Rubber neemt de volledige schok op van vallende gewichten. Uw vloer, structuur en buren zijn beschermd — hoe zwaar de training ook is.</p>
+        </div>
+      </div>
+      <div class="rb-feat anim-up d2">
+        <div class="rb-feat-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+        </div>
+        <div>
+          <h3 data-i18n="rubber.f2t">Geluidsdemping</h3>
+          <p data-i18n="rubber.f2b">Zware dumbbells en barbells produceren enorm veel geluid. Rubber matten absorberen dit geluid en verminderen de overlast voor omliggende ruimtes aanzienlijk.</p>
+        </div>
+      </div>
+      <div class="rb-feat anim-up d3">
+        <div class="rb-feat-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>
+        </div>
+        <div>
+          <h3 data-i18n="rubber.f3t">Slijtvast &amp; Waterbestendig</h3>
+          <p data-i18n="rubber.f3b">Rubber is een van de meest duurzame vloermaterialen. Bestand tegen constante belasting, zweet en schoonmaakproducten — jarenlang zonder problemen.</p>
+        </div>
+      </div>
+      <div class="rb-feat anim-up d4">
+        <div class="rb-feat-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="14" width="20" height="8" rx="1"/><path d="M6 14V6a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8"/><path d="M6 10h12"/></svg>
+        </div>
+        <div>
+          <h3 data-i18n="rubber.f4t">Anti-Slip Oppervlak</h3>
+          <p data-i18n="rubber.f4b">Het rubberoppervlak biedt uitstekende grip, ook bij zweet en intense inspanning. Veilig voor sporter én apparatuur, zonder glijden of verschuiven.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Install banner -->
+    <div class="rb-install anim-up d5">
+      <div>
+        <div class="rb-install-label" data-i18n="rubber.installLabel">Service</div>
+        <h3 data-i18n="rubber.installH3">Wij Leveren én Leggen</h3>
+        <p data-i18n="rubber.installP">Pro Budo 2000 Sportvloeren verzorgt niet alleen de levering van uw rubber matten — wij leggen ze ook vakkundig voor u. Van opmeting tot en met de afwerking.</p>
+        <div class="rb-install-checks">
+          <span class="rb-install-check" data-i18n="rubber.installCheck1">Gratis opmeting op locatie</span>
+          <span class="rb-install-check" data-i18n="rubber.installCheck2">Maatwerk op elke afmeting</span>
+          <span class="rb-install-check" data-i18n="rubber.installCheck3">Professionele montage inbegrepen</span>
+          <span class="rb-install-check" data-i18n="rubber.installCheck4">Advies over de juiste dikte</span>
+        </div>
+      </div>
+      <a href="/contact.html" class="btn btn-red" data-i18n="rubber.installBtn">Afspraak Maken</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── Foto's ── -->
+<section class="section rb-section" aria-labelledby="gal-rb-h">
+  <div class="wrap">
+    <div class="text-center">
+      <span class="label anim-up d1" data-i18n="rubber.galLabel">Projecten</span>
+      <h2 class="h2 anim-up d2" id="gal-rb-h" data-i18n="rubber.galTitle">Rubber Vloeren<br>in de Praktijk</h2>
+      <p class="sub sub--center anim-up d3" data-i18n="rubber.galSub">Van free weight zones tot complete gym-vloeren — professioneel gelegd.</p>
+    </div>
+    <div class="img-gallery img-gallery--3 anim-up d3">
+      <div class="img-ph img-ph--landscape" data-img="/assets/images/rubber/gallery/free-weight-zone.jpg">
+        <img src="/assets/images/rubber/Rubberen matten.png" alt="Free weight zone rubber vloer">
+      </div>
+      <div class="img-ph img-ph--landscape" data-img="/assets/images/rubber/gallery/crossfit-rubber.jpg">
+        <img src="/assets/images/rubber/Rubber sportschool.png" alt="CrossFit box rubber matten">
+      </div>
+      <div class="img-ph img-ph--landscape" data-img="/assets/images/rubber/gallery/rubbermat-close-up.jpg">
+        <img src="/assets/images/rubber/Rubber-matten-vloer-sport-tegels-mat-11.23.53.webp" alt="Close-up rubbermat textuur">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA strip ── -->
+<div class="cta-strip"><div class="wrap"><div class="cta-strip-inner reveal">
+  <div><h2 data-i18n="rubber.ctaTitle">Rubber Vloer Op Maat?</h2><p data-i18n="rubber.ctaSub">Vertel ons uw free weight zone en wij adviseren de juiste dikte en verzorgen de montage.</p></div>
+  <a href="/contact.html" class="btn-white" data-i18n="nav.cta">Offerte Aanvragen</a>
+</div></div></div>
+
+<div id="footer-placeholder"></div>
+<script src="/assets/js/i18n.js?v=24"></script><script src="/assets/js/main.js?v=24"></script>
+<script>
+(function () {
+  var sections = document.querySelectorAll('.rb-section');
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add('rb-vis'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  sections.forEach(function (s) { io.observe(s); });
+})();
+</script>
+</body></html>
+
+

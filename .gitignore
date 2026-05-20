@@ -1,0 +1,20 @@
+# Gevoelige configuratie – nooit committen
+api/config.php
+api/orders.db
+api/*.db
+
+# Logs & tijdelijke bestanden
+*.log
+*.tmp
+*.bak
+
+# OS-bestanden
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor-instellingen
+.vscode/
+.idea/
+*.swp
+*.swo
