@@ -460,6 +460,77 @@ function initSmoothScroll() {
   });
 }
 
+/* ── REVIEW SLIDER ──────────────────────────────────────── */
+function initReviewSlider() {
+  var outer = document.querySelector('.review-slider-outer');
+  if (!outer) return;
+  var track = outer.querySelector('.review-track');
+  var cards = Array.from(outer.querySelectorAll('.review-card'));
+  var prevBtn = outer.querySelector('.review-arrow--prev');
+  var nextBtn = outer.querySelector('.review-arrow--next');
+  var dotsWrap = outer.querySelector('.review-dots');
+  var GAP = 18;
+  var current = 0;
+  var autoTimer = null;
+  var dots = [];
+
+  function getVisible() {
+    return window.innerWidth <= 480 ? 1 : window.innerWidth <= 768 ? 2 : 3;
+  }
+  function maxIdx() { return Math.max(0, cards.length - getVisible()); }
+  function stepPx() { return cards[0].offsetWidth + GAP; }
+
+  function buildDots() {
+    dotsWrap.innerHTML = '';
+    dots = [];
+    for (var i = 0; i <= maxIdx(); i++) {
+      var d = document.createElement('button');
+      d.type = 'button';
+      d.className = 'review-dot';
+      d.setAttribute('aria-label', 'Slide ' + (i + 1));
+      (function(idx) {
+        d.addEventListener('click', function() { stopAuto(); goTo(idx); startAuto(); });
+      })(i);
+      dotsWrap.appendChild(d);
+      dots.push(d);
+    }
+  }
+
+  function goTo(n) {
+    current = Math.max(0, Math.min(n, maxIdx()));
+    track.style.transform = 'translateX(-' + (current * stepPx()) + 'px)';
+    dots.forEach(function(d, i) { d.classList.toggle('active', i === current); });
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === maxIdx();
+  }
+
+  function next() { goTo(current >= maxIdx() ? 0 : current + 1); }
+  function prev() { goTo(current - 1); }
+  function startAuto() { stopAuto(); autoTimer = setInterval(next, 4000); }
+  function stopAuto() { if (autoTimer) { clearInterval(autoTimer); autoTimer = null; } }
+
+  prevBtn.addEventListener('click', function() { stopAuto(); prev(); startAuto(); });
+  nextBtn.addEventListener('click', function() { stopAuto(); next(); startAuto(); });
+
+  var touchStartX = 0;
+  track.addEventListener('touchstart', function(e) { touchStartX = e.touches[0].clientX; stopAuto(); }, { passive: true });
+  track.addEventListener('touchend', function(e) {
+    var dx = e.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(dx) > 40) { dx < 0 ? next() : prev(); }
+    startAuto();
+  }, { passive: true });
+
+  var resizeTimer;
+  window.addEventListener('resize', function() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function() { buildDots(); goTo(Math.min(current, maxIdx())); }, 150);
+  });
+
+  buildDots();
+  goTo(0);
+  startAuto();
+}
+
 /* ── INIT ────────────────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', () => {
   injectNav();
@@ -477,4 +548,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initForm();
   initTimeSlots();
   initSmoothScroll();
+  initReviewSlider();
 });
