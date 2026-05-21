@@ -376,17 +376,21 @@ async function renderOrders(filter, search) {
   var main = document.getElementById('sv-main');
   main.innerHTML = '<p style="color:var(--muted);padding:40px 0;text-align:center">Laden…</p>';
 
-  var statsRes = await api('/api/admin/stats');
-  var stats    = statsRes ? await statsRes.json() : {};
-
-  var qs   = new URLSearchParams();
+  var qs = new URLSearchParams();
   if (filter) qs.set('status', filter);
   if (search) qs.set('q', search);
-  var ordersRes = await api('/api/admin/orders?' + qs.toString());
-  var orders    = ordersRes ? await ordersRes.json() : [];
 
-  var mpRes    = await api('/api/admin/myparcel-status');
-  var mpStatus = mpRes ? await mpRes.json() : null;
+  // Stats en orders parallel ophalen
+  var [statsRes, ordersRes] = await Promise.all([
+    api('/api/admin/stats'),
+    api('/api/admin/orders?' + qs.toString()),
+  ]);
+  var stats  = statsRes  ? await statsRes.json()  : {};
+  var orders = ordersRes ? await ordersRes.json() : [];
+
+  // MyParcel op de achtergrond — blokkeert de render niet
+  var mpStatus = null;
+  var mpPromise = api('/api/admin/myparcel-status').then(function(r) { return r ? r.json() : null; });
 
   var tabs = [
     ['', 'Alle'], ['paid','Betaald'], ['pending','In behandeling'],
@@ -398,14 +402,14 @@ async function renderOrders(filter, search) {
     return '<button class="filter-tab' + active + '" onclick="navigate(\'orders\',{status:\'' + t[0] + '\',q:document.getElementById(\'sv-search\').value})">' + t[1] + '</button>';
   }).join('');
 
-  var mpHtml = '';
-  if (mpStatus) {
+  function buildMpHtml(mpStatus) {
+    if (!mpStatus) return '';
     if (mpStatus.ok) {
       var billingBadge = !mpStatus.billing_ok
         ? '<span class="mp-card__badge mp-card__badge--orange">&#9888; Voeg betaalmethode toe</span>' : '';
       var billingBtn = !mpStatus.billing_ok
         ? '<a class="mp-card__btn mp-card__btn--primary" href="https://backoffice.myparcel.nl/settings/general" target="_blank">Betaling instellen ↗</a>' : '';
-      mpHtml = '<div class="mp-card"><div class="mp-card__icon">📦</div>'
+      return '<div class="mp-card"><div class="mp-card__icon">📦</div>'
         + '<div class="mp-card__body"><div class="mp-card__title">MyParcel &mdash; Verzendlabels</div>'
         + '<div class="mp-card__sub">' + (mpStatus.name ? '<strong>' + esc(mpStatus.name) + '</strong>' : '')
         + (mpStatus.shop ? ' &mdash; ' + esc(mpStatus.shop) : '') + '</div></div>'
@@ -413,15 +417,20 @@ async function renderOrders(filter, search) {
         + '<span class="mp-card__badge mp-card__badge--green">&#10003; Verbonden</span>' + billingBadge + '</div>'
         + '<div class="mp-card__actions">' + billingBtn
         + '<a class="mp-card__btn mp-card__btn--ghost" href="https://backoffice.myparcel.nl" target="_blank">MyParcel ↗</a></div></div>';
-    } else {
-      mpHtml = '<div class="mp-card"><div class="mp-card__icon">🔌</div>'
-        + '<div class="mp-card__body"><div class="mp-card__title">MyParcel &mdash; Verzendlabels</div>'
-        + '<div class="mp-card__sub">' + esc(mpStatus.error || 'Niet verbonden') + '</div></div>'
-        + '<div style="display:flex;align-items:center;gap:10px">'
-        + '<span class="mp-card__badge mp-card__badge--red">&#10007; Niet verbonden</span></div>'
-        + '<div class="mp-card__actions"><a class="mp-card__btn mp-card__btn--ghost" href="https://backoffice.myparcel.nl" target="_blank">MyParcel ↗</a></div></div>';
     }
+    return '<div class="mp-card"><div class="mp-card__icon">🔌</div>'
+      + '<div class="mp-card__body"><div class="mp-card__title">MyParcel &mdash; Verzendlabels</div>'
+      + '<div class="mp-card__sub">' + esc(mpStatus.error || 'Niet verbonden') + '</div></div>'
+      + '<div style="display:flex;align-items:center;gap:10px">'
+      + '<span class="mp-card__badge mp-card__badge--red">&#10007; Niet verbonden</span></div>'
+      + '<div class="mp-card__actions"><a class="mp-card__btn mp-card__btn--ghost" href="https://backoffice.myparcel.nl" target="_blank">MyParcel ↗</a></div></div>';
   }
+
+  var mpHtml = '<div id="sv-mp-slot" style="opacity:.5;pointer-events:none">'
+    + '<div class="mp-card"><div class="mp-card__icon">📦</div>'
+    + '<div class="mp-card__body"><div class="mp-card__title">MyParcel &mdash; Verzendlabels</div>'
+    + '<div class="mp-card__sub" style="color:var(--muted)">Verbinding controleren…</div></div></div>'
+    + '</div>';
 
   var ordersBody = '';
   if (orders.length) {
@@ -453,8 +462,8 @@ async function renderOrders(filter, search) {
   }
 
   main.innerHTML =
-    mpHtml +
-    '<div class="stats">'
+    mpHtml
+    + '<div class="stats">'
       + '<div class="stat-card"><div class="stat-card__label">Totaal orders</div><div class="stat-card__value">' + (stats.total || 0) + '</div></div>'
       + '<div class="stat-card stat-card--green"><div class="stat-card__label">Betaald</div><div class="stat-card__value">' + (stats.paid || 0) + '</div></div>'
       + '<div class="stat-card"><div class="stat-card__label">Open / Wacht</div><div class="stat-card__value">' + (stats.open_count || 0) + '</div></div>'
@@ -472,6 +481,17 @@ async function renderOrders(filter, search) {
         + '<tbody>' + ordersBody + '</tbody>'
       + '</table></div>'
     + '</div>';
+
+  // MyParcel-status invullen zodra beschikbaar
+  mpPromise.then(function(mp) {
+    var slot = document.getElementById('sv-mp-slot');
+    if (!slot) return;
+    var html = buildMpHtml(mp);
+    slot.outerHTML = html || '';
+  }).catch(function() {
+    var slot = document.getElementById('sv-mp-slot');
+    if (slot) slot.outerHTML = '';
+  });
 
   // Search debounce
   document.getElementById('sv-search').addEventListener('input', function(e) {
