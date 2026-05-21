@@ -202,6 +202,9 @@ tr.order-row:hover td{background:#fafbff}
 </div>
 
 <script>
+// ── Config ─────────────────────────────────────────────────────────────────────
+var API_BASE = 'https://www.spanvloeren.nl';
+
 // ── State ──────────────────────────────────────────────────────────────────────
 var token        = sessionStorage.getItem('sv_token');
 var currentPage  = 'orders';
@@ -239,7 +242,7 @@ async function api(path, opts) {
     opts.body = JSON.stringify(opts.json);
     delete opts.json;
   }
-  var res = await fetch(path, Object.assign({}, opts, { headers: headers }));
+  var res = await fetch(API_BASE + path, Object.assign({}, opts, { headers: headers }));
   if (res.status === 401) { logout(); return null; }
   return res;
 }
@@ -262,7 +265,7 @@ async function doLogin() {
   btn.disabled      = true;
   btn.textContent   = 'Bezig…';
   try {
-    var res  = await fetch('/api/admin/login', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ password: pw }) });
+    var res  = await fetch(API_BASE + '/api/admin/login', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ password: pw }) });
     var data = await res.json();
     if (data.token) {
       token = data.token;
@@ -497,7 +500,7 @@ async function renderDetail(orderId) {
       + '<span style="font-size:15px">✅</span>'
       + '<div><div style="font-size:13px;font-weight:700;color:#15803d">Zending aangemaakt bij MyParcel</div>'
       + '<div style="font-size:12px;color:var(--muted);margin-top:2px">Zending-ID: <span style="font-family:monospace">' + shipmentId + '</span></div></div>'
-      + '<a href="/api/admin/download-label?id=' + shipmentId + '&order=' + encodeURIComponent(o.order_id) + '" '
+      + '<a href="' + API_BASE + '/api/admin/download-label?id=' + shipmentId + '&order=' + encodeURIComponent(o.order_id) + '" '
       + 'style="margin-left:auto;display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:#15803d;color:#fff;border-radius:6px;font-size:13px;font-weight:700;text-decoration:none" '
       + 'onclick="addAuth(event,this)">'
       + '↓ Download label</a></div>';
@@ -661,7 +664,7 @@ async function renderDetail(orderId) {
         }
         return r.json().then(function(data) {
           if (data.pending) {
-            showLabelMsg('⏳ ' + data.message + ' <a href="/api/admin/download-label?id=' + encodeURIComponent(data.shipment_id) + '&order=' + encodeURIComponent(o.order_id) + '" style="color:var(--red);font-weight:700" onclick="addAuth(event,this)">→ Download label</a>', 'blue');
+            showLabelMsg('⏳ ' + data.message + ' <a href="' + API_BASE + '/api/admin/download-label?id=' + encodeURIComponent(data.shipment_id) + '&order=' + encodeURIComponent(o.order_id) + '" style="color:var(--red);font-weight:700" onclick="addAuth(event,this)">→ Download label</a>', 'blue');
           } else {
             showLabelMsg('❌ ' + (data.error || 'Onbekende fout'), 'red');
           }
@@ -693,7 +696,7 @@ function addAuth(e, el) {
 
 // ── Label helpers (orders list) ───────────────────────────────────────────────
 function printLabel(shipmentId, orderId) {
-  var url = '/api/admin/download-label?id=' + encodeURIComponent(shipmentId) + '&order=' + encodeURIComponent(orderId) + '&print=1&_t=' + encodeURIComponent(token);
+  var url = API_BASE + '/api/admin/download-label?id=' + encodeURIComponent(shipmentId) + '&order=' + encodeURIComponent(orderId) + '&print=1&_t=' + encodeURIComponent(token);
   window.open(url, '_blank');
 }
 
@@ -780,9 +783,9 @@ async function renderTemplates(activeTpl) {
       + '<div class="tpl-preview">'
         + '<div class="tpl-panel-head">'
           + '<span class="tpl-panel-title">Voorbeeld (met testdata)</span>'
-          + '<a href="/api/admin/template?name=' + activeTpl + '&preview=1&_t=' + encodeURIComponent(token) + '" target="_blank" style="font-size:12px;color:var(--red);font-weight:700">Openen in nieuw tabblad ↗</a>'
+          + '<a href="' + API_BASE + '/api/admin/template?name=' + activeTpl + '&preview=1&_t=' + encodeURIComponent(token) + '" target="_blank" style="font-size:12px;color:var(--red);font-weight:700">Openen in nieuw tabblad ↗</a>'
         + '</div>'
-        + '<iframe class="tpl-iframe" id="previewFrame" src="/api/admin/template?name=' + activeTpl + '&preview=1&_t=' + encodeURIComponent(token) + '"></iframe>'
+        + '<iframe class="tpl-iframe" id="previewFrame" src="' + API_BASE + '/api/admin/template?name=' + activeTpl + '&preview=1&_t=' + encodeURIComponent(token) + '"></iframe>'
       + '</div>'
     + '</div>'
     + '<div class="tpl-vars"><h4>Beschikbare variabelen &mdash; klik om te kopiëren</h4>'
@@ -870,7 +873,7 @@ async function saveTplTemplate() {
     msg.style.color = '#16a34a';
     msg.textContent = '✅ Opgeslagen';
     setTplReadOnly();
-    document.getElementById('previewFrame').src = '/api/admin/template?name=' + window._activeTpl + '&preview=1&_t=' + encodeURIComponent(token) + '&v=' + Date.now();
+    document.getElementById('previewFrame').src = API_BASE + '/api/admin/template?name=' + window._activeTpl + '&preview=1&_t=' + encodeURIComponent(token) + '&v=' + Date.now();
   } else {
     msg.style.color = '#dc2626';
     msg.textContent = '❌ ' + ((data && data.error) || 'Fout');
