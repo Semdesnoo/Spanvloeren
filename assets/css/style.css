@@ -882,6 +882,7 @@ a.ci-val:hover{color:var(--red)}
 }
 @media(max-width:480px){
   .wrap{padding:0 16px}
+  .footer{margin-top:40px}
   .contact-form,.appt-section{padding:20px}
   .hero-content{padding:96px 16px 52px}
   .hero-actions{flex-direction:column;align-items:stretch}
