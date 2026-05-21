@@ -193,6 +193,18 @@ tr.order-row:hover td{background:#fafbff}
   </div>
 </div>
 
+<!-- ══════════ CONFIRM MODAL ══════════ -->
+<div id="sv-confirm" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:14px;padding:36px 40px;max-width:420px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,.2);text-align:center">
+    <div style="font-size:34px;margin-bottom:12px" id="sv-confirm-icon">⚠️</div>
+    <p style="font-size:15px;color:#374151;margin:0 0 28px;line-height:1.6" id="sv-confirm-msg"></p>
+    <div style="display:flex;gap:12px;justify-content:center">
+      <button onclick="svConfirmClose(false)" style="padding:11px 24px;border:1px solid #e5e7eb;border-radius:8px;background:#fff;font-size:14px;font-weight:600;cursor:pointer;color:#6b7280">Annuleren</button>
+      <button id="sv-confirm-ok" onclick="svConfirmClose(true)" style="padding:11px 24px;border:none;border-radius:8px;background:#dc2626;color:#fff;font-size:14px;font-weight:700;cursor:pointer">Bevestigen</button>
+    </div>
+  </div>
+</div>
+
 <!-- ══════════ APP ══════════ -->
 <div id="sv-app" style="display:none">
   <div class="layout">
@@ -471,22 +483,43 @@ async function renderOrders(filter, search) {
 }
 
 // ── Order actions ─────────────────────────────────────────────────────────────
-async function orderAction(orderId, action) {
-  var confirmMsg = {
-    cancel: 'Bestelling annuleren? De status wordt Geannuleerd.',
-    retour:  'Bestelling als retour markeren?',
-    delete:  'Bestelling permanent verwijderen? Dit kan niet ongedaan worden gemaakt.',
-  };
-  if (!confirm(confirmMsg[action] || 'Weet je het zeker?')) return;
+var _svConfirmCb = null;
+function svConfirm(msg, icon, okLabel, okColor, cb) {
+  _svConfirmCb = cb;
+  document.getElementById('sv-confirm-msg').textContent  = msg;
+  document.getElementById('sv-confirm-icon').textContent = icon || '⚠️';
+  var ok = document.getElementById('sv-confirm-ok');
+  ok.textContent      = okLabel || 'Bevestigen';
+  ok.style.background = okColor || '#dc2626';
+  document.getElementById('sv-confirm').style.display = 'flex';
+}
+function svConfirmClose(yes) {
+  document.getElementById('sv-confirm').style.display = 'none';
+  if (yes && _svConfirmCb) _svConfirmCb();
+  _svConfirmCb = null;
+}
 
-  var res  = await api('/api/admin/update-order', { method: 'POST', json: { order_id: orderId, action: action } });
-  var data = res ? await res.json() : null;
-  if (data && data.ok) {
-    if (action === 'delete') navigate('orders');
-    else renderDetail(orderId);
-  } else {
-    alert('Fout: ' + ((data && data.error) || 'Onbekende fout'));
-  }
+async function orderAction(orderId, action) {
+  var cfg = {
+    cancel: { msg: 'Bestelling annuleren? De status wordt Geannuleerd.',           icon: '❎', label: 'Annuleren',   color: '#b45309' },
+    retour: { msg: 'Bestelling als retour markeren?',                              icon: '↩️', label: 'Retour', color: '#1d4ed8' },
+    delete: { msg: 'Bestelling permanent verwijderen? Dit kan niet ongedaan worden gemaakt.', icon: '🗑️', label: 'Verwijderen', color: '#dc2626' },
+  };
+  var c = cfg[action] || { msg: 'Weet je het zeker?', icon: '⚠️', label: 'Bevestigen', color: '#dc2626' };
+  svConfirm(c.msg, c.icon, c.label, c.color, async function() {
+    try {
+      var res  = await api('/api/admin/update-order', { method: 'POST', json: { order_id: orderId, action: action } });
+      var data = res ? await res.json() : null;
+      if (data && data.ok) {
+        if (action === 'delete') navigate('orders');
+        else renderDetail(orderId);
+      } else {
+        svConfirm((data && data.error) || 'Onbekende fout', '❌', 'Sluiten', '#6b7280', null);
+      }
+    } catch(e) {
+      svConfirm('Verbindingsfout, probeer opnieuw', '❌', 'Sluiten', '#6b7280', null);
+    }
+  });
 }
 
 // ── Email history card ────────────────────────────────────────────────────────
