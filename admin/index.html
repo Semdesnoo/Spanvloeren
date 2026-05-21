@@ -404,7 +404,7 @@ async function renderOrders(filter, search) {
       var billingBadge = !mpStatus.billing_ok
         ? '<span class="mp-card__badge mp-card__badge--orange">&#9888; Voeg betaalmethode toe</span>' : '';
       var billingBtn = !mpStatus.billing_ok
-        ? '<a class="mp-card__btn mp-card__btn--primary" href="https://app.myparcel.nl/settings/general" target="_blank">Betaling instellen ↗</a>' : '';
+        ? '<a class="mp-card__btn mp-card__btn--primary" href="https://backoffice.myparcel.nl/settings/general" target="_blank">Betaling instellen ↗</a>' : '';
       mpHtml = '<div class="mp-card"><div class="mp-card__icon">📦</div>'
         + '<div class="mp-card__body"><div class="mp-card__title">MyParcel &mdash; Verzendlabels</div>'
         + '<div class="mp-card__sub">' + (mpStatus.name ? '<strong>' + esc(mpStatus.name) + '</strong>' : '')
@@ -412,14 +412,14 @@ async function renderOrders(filter, search) {
         + '<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">'
         + '<span class="mp-card__badge mp-card__badge--green">&#10003; Verbonden</span>' + billingBadge + '</div>'
         + '<div class="mp-card__actions">' + billingBtn
-        + '<a class="mp-card__btn mp-card__btn--ghost" href="https://app.myparcel.nl" target="_blank">MyParcel ↗</a></div></div>';
+        + '<a class="mp-card__btn mp-card__btn--ghost" href="https://backoffice.myparcel.nl" target="_blank">MyParcel ↗</a></div></div>';
     } else {
       mpHtml = '<div class="mp-card"><div class="mp-card__icon">🔌</div>'
         + '<div class="mp-card__body"><div class="mp-card__title">MyParcel &mdash; Verzendlabels</div>'
         + '<div class="mp-card__sub">' + esc(mpStatus.error || 'Niet verbonden') + '</div></div>'
         + '<div style="display:flex;align-items:center;gap:10px">'
         + '<span class="mp-card__badge mp-card__badge--red">&#10007; Niet verbonden</span></div>'
-        + '<div class="mp-card__actions"><a class="mp-card__btn mp-card__btn--ghost" href="https://app.myparcel.nl" target="_blank">MyParcel ↗</a></div></div>';
+        + '<div class="mp-card__actions"><a class="mp-card__btn mp-card__btn--ghost" href="https://backoffice.myparcel.nl" target="_blank">MyParcel ↗</a></div></div>';
     }
   }
 
