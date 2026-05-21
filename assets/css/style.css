@@ -309,7 +309,8 @@ ul{list-style:none}
    COVERAGE SECTION
    ======================================================== */
 .coverage{background:var(--black);padding:100px 0}
-.coverage-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:52px}
+.coverage-slider-wrap{overflow:hidden}
+.coverage-grid{display:flex;flex-wrap:nowrap;gap:16px;margin-top:52px;will-change:transform}
 .coverage-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:36px 24px;text-align:center;transition:background 220ms,border-color 220ms,transform 220ms;cursor:default}
 .coverage-card:hover{background:rgba(255,255,255,.07);border-color:rgba(230,57,70,.4);transform:translateY(-4px)}
 .coverage-code{font-family:'Barlow Condensed',sans-serif;font-size:44px;font-weight:900;color:var(--red);line-height:1;margin-bottom:16px;letter-spacing:-1px}
@@ -896,9 +897,9 @@ a.ci-val:hover{color:var(--red)}
   .stat{padding:0 12px 0 0}
   .stat-val{font-size:30px}
   .stat-lbl{font-size:10px}
-  .coverage-grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;margin-top:36px;margin-left:-28px;margin-right:-28px;padding-left:28px;padding-right:28px}
-  .coverage-grid::-webkit-scrollbar{display:none}
-  .coverage-card{scroll-snap-align:start;min-width:78vw;flex-shrink:0}
+  .coverage-slider-wrap{overflow:visible}
+  .coverage-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;transform:none!important;transition:none!important}
+  .coverage-card{min-width:0!important;flex-shrink:1}
   .shop-img{height:220px}
   .page-hero-content{padding:96px 16px 44px}
   .page-hero h1{font-size:clamp(32px,9vw,48px)}

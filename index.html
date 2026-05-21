@@ -318,31 +318,33 @@
       <h2 class="h2 h2--white reveal d1" id="coverage-h" data-i18n="home.coverageTitle">Actief in Heel Europa<br />& de Cariben</h2>
       <p class="sub sub--white sub--center reveal d2" data-i18n="home.coverageSub">Wij leveren en installeren in Nederland, België, Duitsland en Curaçao.</p>
     </div>
-    <div class="coverage-grid">
-      <a href="/referenties/nederland.html" class="coverage-card reveal d1">
-        <div class="coverage-code">NL</div>
-        <h3 data-i18n="nav.nederland">Nederland</h3>
-        <p data-i18n="home.covNLSub">Onze thuismarkt met meer dan 100 projecten door het hele land.</p>
-        <div class="coverage-projects">100+ projecten</div>
-      </a>
-      <a href="/referenties/belgie.html" class="coverage-card reveal d2">
-        <div class="coverage-code">BE</div>
-        <h3 data-i18n="nav.belgie">België</h3>
-        <p data-i18n="home.covBESub">Uitgebreid klantennetwerk door heel België en Brussel.</p>
-        <div class="coverage-projects">14+ projecten</div>
-      </a>
-      <a href="/referenties/duitsland.html" class="coverage-card reveal d3">
-        <div class="coverage-code">DE</div>
-        <h3 data-i18n="nav.duitsland">Duitsland</h3>
-        <p data-i18n="home.covDESub">Groeiend aantal projecten van Hamburg tot Duisburg.</p>
-        <div class="coverage-projects">12+ projecten</div>
-      </a>
-      <a href="/referenties/curacao.html" class="coverage-card reveal d4">
-        <div class="coverage-code">CW</div>
-        <h3 data-i18n="nav.curacao">Curaçao</h3>
-        <p data-i18n="home.covCWSub">Internationale projecten op het Caribische eiland Curaçao.</p>
-        <div class="coverage-projects">Immartial Athlete Centre</div>
-      </a>
+    <div class="coverage-slider-wrap">
+      <div class="coverage-grid" id="coverage-track">
+        <a href="/referenties/nederland.html" class="coverage-card reveal d1">
+          <div class="coverage-code">NL</div>
+          <h3 data-i18n="nav.nederland">Nederland</h3>
+          <p data-i18n="home.covNLSub">Onze thuismarkt met meer dan 100 projecten door het hele land.</p>
+          <div class="coverage-projects">100+ projecten</div>
+        </a>
+        <a href="/referenties/belgie.html" class="coverage-card reveal d2">
+          <div class="coverage-code">BE</div>
+          <h3 data-i18n="nav.belgie">België</h3>
+          <p data-i18n="home.covBESub">Uitgebreid klantennetwerk door heel België en Brussel.</p>
+          <div class="coverage-projects">14+ projecten</div>
+        </a>
+        <a href="/referenties/duitsland.html" class="coverage-card reveal d3">
+          <div class="coverage-code">DE</div>
+          <h3 data-i18n="nav.duitsland">Duitsland</h3>
+          <p data-i18n="home.covDESub">Groeiend aantal projecten van Hamburg tot Duisburg.</p>
+          <div class="coverage-projects">12+ projecten</div>
+        </a>
+        <a href="/referenties/curacao.html" class="coverage-card reveal d4">
+          <div class="coverage-code">CW</div>
+          <h3 data-i18n="nav.curacao">Curaçao</h3>
+          <p data-i18n="home.covCWSub">Internationale projecten op het Caribische eiland Curaçao.</p>
+          <div class="coverage-projects">Immartial Athlete Centre</div>
+        </a>
+      </div>
     </div>
   </div>
 </section>
@@ -406,6 +408,42 @@
 </script>
 <script src="/assets/js/i18n.js?v=25"></script>
 <script src="/assets/js/main.js?v=25"></script>
+<script>
+(function(){
+  if(window.innerWidth <= 480) return;
+  var wrap = document.querySelector('.coverage-slider-wrap');
+  var track = document.getElementById('coverage-track');
+  if(!wrap || !track) return;
+  var cards = Array.from(track.querySelectorAll('.coverage-card'));
+  var total = cards.length;
+  var gap = 16;
+  var visible = window.innerWidth <= 900 ? 2 : 3;
+  var cardW = (wrap.offsetWidth - gap * (visible - 1)) / visible;
+  cards.forEach(function(c){ c.style.minWidth = cardW + 'px'; });
+  for(var i = 0; i < visible; i++){
+    var clone = cards[i].cloneNode(true);
+    clone.style.minWidth = cardW + 'px';
+    track.appendChild(clone);
+  }
+  var idx = 0;
+  var busy = false;
+  setInterval(function(){
+    if(busy) return;
+    busy = true;
+    idx++;
+    track.style.transition = 'transform 700ms cubic-bezier(.4,0,.2,1)';
+    track.style.transform = 'translateX(-' + (idx * (cardW + gap)) + 'px)';
+    setTimeout(function(){
+      if(idx >= total){
+        track.style.transition = 'none';
+        idx = 0;
+        track.style.transform = 'translateX(0)';
+      }
+      busy = false;
+    }, 720);
+  }, 3500);
+})();
+</script>
 </body>
 </html>
 
