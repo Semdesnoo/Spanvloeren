@@ -307,7 +307,8 @@ function navigate(page, params) {
   else if (params.order)    { qs.set('order', params.order); }
   else { if (params.status) qs.set('status', params.status); if (params.q) qs.set('q', params.q); }
 
-  history.pushState({}, '', '/admin/?' + qs.toString());
+  var qsStr = qs.toString();
+  history.pushState({}, '', '/admin/' + (qsStr ? '?' + qsStr : ''));
 
   document.getElementById('nav-orders').classList.toggle('active',    page === 'orders'    && !params.order);
   document.getElementById('nav-templates').classList.toggle('active', page === 'templates');
