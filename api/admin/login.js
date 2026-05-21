@@ -1,6 +1,7 @@
 const { signToken } = require('../../lib/auth');
+const { withCors }  = require('../../lib/cors');
 
-module.exports = (req, res) => {
+module.exports = withCors((req, res) => {
   res.setHeader('Content-Type', 'application/json; charset=utf-8');
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method Not Allowed' });
 
@@ -10,4 +11,4 @@ module.exports = (req, res) => {
   }
 
   return res.json({ token: signToken() });
-};
+});

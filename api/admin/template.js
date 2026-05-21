@@ -1,6 +1,7 @@
 const { verifyToken } = require('../../lib/auth');
 const { initDb, query } = require('../../lib/db');
 const { buildItemRows, renderTemplate, getTemplate } = require('../../lib/mail');
+const { withCors }      = require('../../lib/cors');
 
 const ALLOWED = ['order-confirmation', 'shipping-confirmation'];
 
@@ -9,7 +10,7 @@ const SAMPLE_ITEMS = [
   { name: 'Tatami Puzzelmatten',   qty: 4, linePrice: 199.80,  bundle: false },
 ];
 
-module.exports = async (req, res) => {
+module.exports = withCors(async (req, res) => {
   if (req.method !== 'GET') return res.status(405).end();
   if (!verifyToken(req, res)) return;
 
@@ -43,4 +44,4 @@ module.exports = async (req, res) => {
 
   res.setHeader('Content-Type', 'application/json; charset=utf-8');
   res.json({ html });
-};
+});

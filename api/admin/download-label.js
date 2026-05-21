@@ -1,6 +1,7 @@
 const { verifyToken } = require('../../lib/auth');
+const { withCors }    = require('../../lib/cors');
 
-module.exports = async (req, res) => {
+module.exports = withCors(async (req, res) => {
   if (req.method !== 'GET') return res.status(405).end();
   if (!verifyToken(req, res)) return;
 
@@ -30,4 +31,4 @@ module.exports = async (req, res) => {
   res.setHeader('Content-Type', 'application/pdf');
   res.setHeader('Content-Disposition', `${inline ? 'inline' : 'attachment'}; filename="label-${orderId}.pdf"`);
   res.send(Buffer.from(buf));
-};
+});

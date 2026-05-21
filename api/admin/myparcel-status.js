@@ -1,6 +1,7 @@
 const { verifyToken } = require('../../lib/auth');
+const { withCors }    = require('../../lib/cors');
 
-module.exports = async (req, res) => {
+module.exports = withCors(async (req, res) => {
   res.setHeader('Content-Type', 'application/json; charset=utf-8');
   if (req.method !== 'GET') return res.status(405).end();
   if (!verifyToken(req, res)) return;
@@ -30,4 +31,4 @@ module.exports = async (req, res) => {
   }
 
   res.json(status);
-};
+});

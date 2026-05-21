@@ -1,9 +1,10 @@
 const { verifyToken } = require('../../lib/auth');
 const { initDb, query } = require('../../lib/db');
+const { withCors }      = require('../../lib/cors');
 
 const ALLOWED = ['order-confirmation', 'shipping-confirmation'];
 
-module.exports = async (req, res) => {
+module.exports = withCors(async (req, res) => {
   res.setHeader('Content-Type', 'application/json; charset=utf-8');
   if (req.method !== 'POST') return res.status(405).end();
   if (!verifyToken(req, res)) return;
@@ -20,4 +21,4 @@ module.exports = async (req, res) => {
   `, [template, html]);
 
   res.json({ ok: true });
-};
+});

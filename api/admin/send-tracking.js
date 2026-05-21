@@ -1,8 +1,9 @@
 const { verifyToken } = require('../../lib/auth');
 const { initDb, query } = require('../../lib/db');
 const { sendShippingConfirmation } = require('../../lib/mail');
+const { withCors }      = require('../../lib/cors');
 
-module.exports = async (req, res) => {
+module.exports = withCors(async (req, res) => {
   res.setHeader('Content-Type', 'application/json; charset=utf-8');
   if (req.method !== 'POST') return res.status(405).end();
   if (!verifyToken(req, res)) return;
@@ -33,4 +34,4 @@ module.exports = async (req, res) => {
   } catch (e) {
     res.json({ ok: false, error: e.message });
   }
-};
+});

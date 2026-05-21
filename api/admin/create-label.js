@@ -1,5 +1,6 @@
 const { verifyToken } = require('../../lib/auth');
 const { initDb, query } = require('../../lib/db');
+const { withCors }      = require('../../lib/cors');
 
 const COUNTRY_MAP = {
   'nederland': 'NL', 'netherlands': 'NL', 'nl': 'NL',
@@ -11,7 +12,7 @@ const COUNTRY_MAP = {
 
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
-module.exports = async (req, res) => {
+module.exports = withCors(async (req, res) => {
   if (req.method !== 'POST') return res.status(405).end();
   if (!verifyToken(req, res)) return;
 
@@ -100,4 +101,4 @@ module.exports = async (req, res) => {
   res.setHeader('Content-Type', 'application/pdf');
   res.setHeader('Content-Disposition', `attachment; filename="label-${order_id}.pdf"`);
   res.send(labelPdf);
-};
+});
