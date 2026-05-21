@@ -410,14 +410,13 @@
 <script src="/assets/js/main.js?v=25"></script>
 <script>
 (function(){
-  if(window.innerWidth <= 480) return;
   var wrap = document.querySelector('.coverage-slider-wrap');
   var track = document.getElementById('coverage-track');
   if(!wrap || !track) return;
   var cards = Array.from(track.querySelectorAll('.coverage-card'));
   var total = cards.length;
   var gap = 16;
-  var visible = window.innerWidth <= 900 ? 2 : 3;
+  var visible = window.innerWidth <= 480 ? 1 : window.innerWidth <= 900 ? 2 : 3;
   var cardW = (wrap.offsetWidth - gap * (visible - 1)) / visible;
   cards.forEach(function(c){ c.style.minWidth = cardW + 'px'; });
   for(var i = 0; i < visible; i++){
