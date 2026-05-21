@@ -106,109 +106,7 @@
           </div>
         </div>
 
-        <!-- Payment method -->
-        <div class="checkout-block">
-          <h3 data-i18n="checkout.paymentTitle">Betaalmethode</h3>
-          <div class="payment-methods">
-
-            <!-- iDEAL -->
-            <label class="payment-option">
-              <input type="radio" name="payment" value="ideal" checked>
-              <div class="payment-option-inner">
-                <div class="payment-radio"></div>
-                <div class="payment-logo-wrap">
-                  <img src="/assets/images/payment/ideal.webp" alt="iDEAL" class="payment-logo">
-                </div>
-                <div>
-                  <div class="payment-label">iDEAL</div>
-                  <div class="payment-sublabel" data-i18n="checkout.idealSub">Meest gebruikt in Nederland</div>
-                </div>
-                <span class="payment-flag">🇳🇱</span>
-              </div>
-            </label>
-
-            <!-- Bancontact -->
-            <label class="payment-option">
-              <input type="radio" name="payment" value="bancontact">
-              <div class="payment-option-inner">
-                <div class="payment-radio"></div>
-                <div class="payment-logo-wrap">
-                  <img src="/assets/images/payment/bancontact.webp" alt="Bancontact" class="payment-logo">
-                </div>
-                <div>
-                  <div class="payment-label">Bancontact</div>
-                  <div class="payment-sublabel" data-i18n="checkout.bancontactSub">Meest gebruikt in België</div>
-                </div>
-                <span class="payment-flag">🇧🇪</span>
-              </div>
-            </label>
-
-            <!-- SOFORT / Klarna Sofort -->
-            <label class="payment-option">
-              <input type="radio" name="payment" value="sofort">
-              <div class="payment-option-inner">
-                <div class="payment-radio"></div>
-                <div class="payment-logo-wrap">
-                  <img src="/assets/images/payment/sofort.webp" alt="SOFORT" class="payment-logo">
-                </div>
-                <div>
-                  <div class="payment-label">SOFORT Banking</div>
-                  <div class="payment-sublabel" data-i18n="checkout.sofortSub">Meest gebruikt in Duitsland</div>
-                </div>
-                <span class="payment-flag">🇩🇪</span>
-              </div>
-            </label>
-
-
-            <!-- Creditcard (Visa / Mastercard) -->
-            <label class="payment-option">
-              <input type="radio" name="payment" value="creditcard">
-              <div class="payment-option-inner">
-                <div class="payment-radio"></div>
-                <div class="payment-logo-wrap payment-logo-wrap--cards">
-                  <img src="/assets/images/payment/visa.webp" alt="Visa" class="payment-logo payment-logo--sm">
-                  <img src="/assets/images/payment/mastercard.svg" alt="Mastercard" class="payment-logo payment-logo--sm">
-                </div>
-                <div>
-                  <div class="payment-label">Creditcard</div>
-                  <div class="payment-sublabel" data-i18n="checkout.creditcardSub">Visa &amp; Mastercard</div>
-                </div>
-              </div>
-            </label>
-
-            <!-- Klarna -->
-            <label class="payment-option">
-              <input type="radio" name="payment" value="klarna">
-              <div class="payment-option-inner">
-                <div class="payment-radio"></div>
-                <div class="payment-logo-wrap">
-                  <img src="/assets/images/payment/klarna.avif" alt="Klarna" class="payment-logo">
-                </div>
-                <div>
-                  <div class="payment-label">Klarna</div>
-                  <div class="payment-sublabel" data-i18n="checkout.klarnaSub">Achteraf betalen</div>
-                </div>
-              </div>
-            </label>
-
-            <!-- SEPA Bankoverschrijving -->
-            <label class="payment-option">
-              <input type="radio" name="payment" value="banktransfer">
-              <div class="payment-option-inner">
-                <div class="payment-radio"></div>
-                <div class="payment-logo-wrap">
-                  <img src="/assets/images/payment/Sepa.webp" alt="SEPA" class="payment-logo">
-                </div>
-                <div>
-                  <div class="payment-label" data-i18n="checkout.sepaLabel">SEPA Bankoverschrijving</div>
-                  <div class="payment-sublabel" data-i18n="checkout.sepaSub">Directe overboeking · NL / BE / DE</div>
-                </div>
-              </div>
-            </label>
-
-          </div>
-          <p class="payment-info">Veilig betalen via <strong>Mollie</strong>. Je wordt na het plaatsen doorgestuurd naar de betaalpagina van je gekozen methode.</p>
-        </div>
+        <p class="payment-info">Veilig betalen via <strong>Mollie</strong>. Je kiest je betaalmethode op de volgende pagina.</p>
 
         <button type="button" class="btn btn-red checkout-submit" id="checkout-submit" data-i18n="checkout.submitBtn">
           Bestelling Plaatsen →
@@ -362,7 +260,6 @@
     var straat     = document.getElementById('straat').value.trim();
     var land       = document.getElementById('land').value;
     var notities   = document.getElementById('notities').value.trim();
-    var payment    = document.querySelector('input[name="payment"]:checked').value;
 
     var subtotal = 0, shipping = 0, grand = 0, orderLines = '';
 
@@ -404,7 +301,7 @@
     fetch('/api/create-payment', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ amount: grand, method: payment, customer: customer, items: cartItems })
+      body: JSON.stringify({ amount: grand, customer: customer, items: cartItems })
     })
     .then(function (res) { return res.json(); })
     .then(function (data) {
@@ -415,32 +312,11 @@
         throw new Error(data.error || 'Geen checkoutUrl');
       }
     })
-    .catch(function () {
-      // ── Fallback: e-mail ──────────────────────────────────────────────────
-      var subject = encodeURIComponent('Nieuwe bestelling – Miral Schoonmaakproducten');
-      var body = encodeURIComponent(
-        'NIEUWE BESTELLING\n=================\n\n' + orderLines +
-        '\nSubtotaal:      ' + fmt(subtotal) +
-        '\nVerzendkosten:  ' + (shipping === 0 ? 'Gratis' : fmt(shipping)) +
-        '\nTOTAAL:         ' + fmt(grand) +
-        '\nBetaalmethode:  ' + payment +
-        '\n\nKLANTGEGEVENS\n=============\n' +
-        'Naam:     ' + customer.name + '\n' +
-        'E-mail:   ' + email + '\n' +
-        'Telefoon: ' + telefoon +
-        '\n\nBEZORGADRES\n===========\n' +
-        straat + ' ' + huisnummer + '\n' + postcode + ' ' + stad + '\n' + land +
-        '\n\nOPMERKINGEN\n===========\n' + (notities || 'Geen')
-      );
-      window.location.href = 'mailto:info@spanvloeren.nl?subject=' + subject + '&body=' + body;
-
-      setTimeout(function () {
-        if (useCart) { localStorage.removeItem('miral-cart'); }
-        document.getElementById('checkout-main').style.display = 'none';
-        var s = document.getElementById('checkout-success');
-        s.classList.add('show');
-        s.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }, 800);
+    .catch(function (err) {
+      btn.disabled = false;
+      btn.textContent = 'Bestelling Plaatsen →';
+      alert('Er is iets misgegaan bij het aanmaken van de betaling. Probeer het opnieuw of neem contact op via 06 832 968 02.');
+      console.error(err);
     });
   });
 })();
