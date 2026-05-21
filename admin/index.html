@@ -64,6 +64,15 @@ tr.order-row:hover td{background:#fafbff}
 .badge--orange{background:#b45309}
 .badge--red{background:#dc2626}
 .badge--gray{background:#4b5563}
+.badge--blue{background:#1d4ed8}
+
+.btn-action{display:inline-flex;align-items:center;gap:7px;padding:10px 20px;border:none;border-radius:6px;font-size:14px;font-weight:700;cursor:pointer;transition:all .15s}
+.btn-action--orange{background:#fff7ed;color:#c2410c;border:1px solid #fed7aa}
+.btn-action--orange:hover{background:#ffedd5}
+.btn-action--blue{background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe}
+.btn-action--blue:hover{background:#dbeafe}
+.btn-action--red{background:#fff1f2;color:#be123c;border:1px solid #fecdd3}
+.btn-action--red:hover{background:#ffe4e6}
 
 .detail-back{display:inline-flex;align-items:center;gap:8px;margin-bottom:24px;padding:8px 16px;background:#fff;border:1px solid var(--border);border-radius:6px;font-size:14px;font-weight:600;color:var(--muted);cursor:pointer;transition:color .15s;box-shadow:var(--shadow)}
 .detail-back:hover{color:var(--text)}
@@ -338,6 +347,7 @@ function statusBadge(s) {
     failed:   ['badge--red',    'Mislukt'],
     canceled: ['badge--red',    'Geannuleerd'],
     expired:  ['badge--gray',   'Verlopen'],
+    retour:   ['badge--blue',   'Retour'],
   };
   var info = map[s] || ['badge--gray', esc(s)];
   return '<span class="badge ' + info[0] + '">' + info[1] + '</span>';
@@ -368,7 +378,7 @@ async function renderOrders(filter, search) {
 
   var tabs = [
     ['', 'Alle'], ['paid','Betaald'], ['pending','In behandeling'],
-    ['failed','Mislukt'], ['canceled','Geannuleerd'], ['expired','Verlopen']
+    ['failed','Mislukt'], ['canceled','Geannuleerd'], ['expired','Verlopen'], ['retour','Retour']
   ];
 
   var tabsHtml = tabs.map(function(t) {
@@ -458,6 +468,25 @@ async function renderOrders(filter, search) {
       navigate('orders', { status: filter, q: e.target.value });
     }, 400);
   });
+}
+
+// ── Order actions ─────────────────────────────────────────────────────────────
+async function orderAction(orderId, action) {
+  var confirmMsg = {
+    cancel: 'Bestelling annuleren? De status wordt Geannuleerd.',
+    retour:  'Bestelling als retour markeren?',
+    delete:  'Bestelling permanent verwijderen? Dit kan niet ongedaan worden gemaakt.',
+  };
+  if (!confirm(confirmMsg[action] || 'Weet je het zeker?')) return;
+
+  var res  = await api('/api/admin/update-order', { method: 'POST', json: { order_id: orderId, action: action } });
+  var data = res ? await res.json() : null;
+  if (data && data.ok) {
+    if (action === 'delete') navigate('orders');
+    else renderDetail(orderId);
+  } else {
+    alert('Fout: ' + ((data && data.error) || 'Onbekende fout'));
+  }
 }
 
 // ── Email history card ────────────────────────────────────────────────────────
@@ -614,6 +643,14 @@ async function renderDetail(orderId) {
           + '<button id="labelBtn" style="padding:10px 20px;background:var(--red);color:#fff;border:none;border-radius:6px;font-size:14px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:8px">📦 Maak label en download</button>'
         + '</div>'
         + '<div id="labelMsg" style="display:none;margin-top:14px;padding:12px 16px;border-radius:8px;font-size:14px"></div>'
+      + '</div>'
+      // Acties
+      + '<div class="detail-card" style="grid-column:1/-1"><h3>Acties</h3>'
+        + '<div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">'
+          + '<button type="button" class="btn-action btn-action--blue" onclick="orderAction(\'' + esc(o.order_id) + '\',\'retour\')">&#8635; Retour aangevraagd</button>'
+          + '<button type="button" class="btn-action btn-action--orange" onclick="orderAction(\'' + esc(o.order_id) + '\',\'cancel\')">&#10005; Annuleren</button>'
+          + '<button type="button" class="btn-action btn-action--red" onclick="orderAction(\'' + esc(o.order_id) + '\',\'delete\')" style="margin-left:auto">&#128465; Verwijderen</button>'
+        + '</div>'
       + '</div>'
       // Producten
       + '<div class="detail-card" style="grid-column:1/-1"><h3>Bestelde producten</h3>'

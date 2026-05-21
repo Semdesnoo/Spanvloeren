@@ -9,7 +9,7 @@ module.exports = withCors(async (req, res) => {
 
   await initDb();
 
-  const VALID_STATUSES = ['paid', 'pending', 'open', 'failed', 'canceled', 'expired'];
+  const VALID_STATUSES = ['paid', 'pending', 'open', 'failed', 'canceled', 'expired', 'retour'];
   const filter = VALID_STATUSES.includes(req.query.status) ? req.query.status : '';
   const search = (req.query.q || '').trim();
 
