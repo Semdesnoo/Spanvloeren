@@ -66,6 +66,7 @@ module.exports = async (req, res) => {
 
     try {
       await sendOrderConfirmation(orderId, customer, items, amount, { query });
+      await query('UPDATE orders SET confirmation_sent_at=NOW(), updated_at=NOW() WHERE order_id=$1', [orderId]);
     } catch (e) {
       console.error('[Mail]', e.message);
     }

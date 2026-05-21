@@ -30,6 +30,7 @@ module.exports = withCors(async (req, res) => {
 
   try {
     await sendShippingConfirmation(order, tracking, safeCarrier, { query });
+    await query('UPDATE orders SET shipping_confirmation_sent_at=NOW(), updated_at=NOW() WHERE order_id=$1', [order_id]);
     res.json({ ok: true, email: order.email });
   } catch (e) {
     res.json({ ok: false, error: e.message });

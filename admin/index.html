@@ -459,6 +459,26 @@ async function renderOrders(filter, search) {
   });
 }
 
+// ── Email history card ────────────────────────────────────────────────────────
+function buildEmailsCard(o) {
+  function row(label, sentAt) {
+    if (sentAt) {
+      return '<div class="detail-row">'
+        + '<span class="detail-row__label">' + label + '</span>'
+        + '<span class="detail-row__value" style="color:#15803d">&#10003; Verstuurd op ' + fmtDate(sentAt) + '</span>'
+        + '</div>';
+    }
+    return '<div class="detail-row">'
+      + '<span class="detail-row__label">' + label + '</span>'
+      + '<span class="detail-row__value" style="color:var(--muted)">Niet verstuurd</span>'
+      + '</div>';
+  }
+  return '<div class="detail-card" style="grid-column:1/-1"><h3>Verstuurde e-mails</h3>'
+    + row('Orderbevestiging', o.confirmation_sent_at)
+    + row('Verzendbevestiging (T&amp;T)', o.shipping_confirmation_sent_at)
+    + '</div>';
+}
+
 // ── Order detail ──────────────────────────────────────────────────────────────
 async function renderDetail(orderId) {
   document.getElementById('nav-orders').classList.remove('active');
@@ -547,6 +567,8 @@ async function renderDetail(orderId) {
         + '<div class="detail-row"><span class="detail-row__label">Besteld op</span><span class="detail-row__value">' + fmtDate(o.created_at) + '</span></div>'
         + '<div class="detail-row"><span class="detail-row__label">Bijgewerkt op</span><span class="detail-row__value">' + fmtDate(o.updated_at) + '</span></div>'
       + '</div>'
+      // Verstuurde e-mails
+      + buildEmailsCard(o)
       // Verzending
       + '<div class="detail-card" style="grid-column:1/-1"><h3>Verzending</h3>'
         + '<div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start" id="ship-grid">'
