@@ -896,7 +896,9 @@ a.ci-val:hover{color:var(--red)}
   .stat{padding:0 12px 0 0}
   .stat-val{font-size:30px}
   .stat-lbl{font-size:10px}
-  .coverage-grid{grid-template-columns:1fr}
+  .coverage-grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;margin-top:36px;margin-left:-28px;margin-right:-28px;padding-left:28px;padding-right:28px}
+  .coverage-grid::-webkit-scrollbar{display:none}
+  .coverage-card{scroll-snap-align:start;min-width:78vw;flex-shrink:0}
   .shop-img{height:220px}
   .page-hero-content{padding:96px 16px 44px}
   .page-hero h1{font-size:clamp(32px,9vw,48px)}
