@@ -509,7 +509,10 @@ async function orderAction(orderId, action) {
   svConfirm(c.msg, c.icon, c.label, c.color, async function() {
     try {
       var res  = await api('/api/admin/update-order', { method: 'POST', json: { order_id: orderId, action: action } });
-      var data = res ? await res.json() : null;
+      if (!res) return;
+      var text = await res.text();
+      var data;
+      try { data = JSON.parse(text); } catch(_) { data = { ok: false, error: 'HTTP ' + res.status + ' – geen geldige respons' }; }
       if (data && data.ok) {
         if (action === 'delete') navigate('orders');
         else renderDetail(orderId);
@@ -517,7 +520,7 @@ async function orderAction(orderId, action) {
         svConfirm((data && data.error) || 'Onbekende fout', '❌', 'Sluiten', '#6b7280', null);
       }
     } catch(e) {
-      svConfirm('Verbindingsfout, probeer opnieuw', '❌', 'Sluiten', '#6b7280', null);
+      svConfirm('Verbindingsfout: ' + e.message, '❌', 'Sluiten', '#6b7280', null);
     }
   });
 }
