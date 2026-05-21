@@ -7,6 +7,11 @@ api/*.db
 node_modules/
 package-lock.json
 
+# Environment / secrets – nooit committen
+.env
+.env.local
+.env*.local
+
 # Logs & tijdelijke bestanden
 *.log
 *.tmp
