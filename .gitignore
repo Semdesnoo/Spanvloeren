@@ -3,6 +3,10 @@ api/config.php
 api/orders.db
 api/*.db
 
+# Node.js
+node_modules/
+package-lock.json
+
 # Logs & tijdelijke bestanden
 *.log
 *.tmp

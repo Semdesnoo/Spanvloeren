@@ -401,7 +401,7 @@
     };
 
     // ── Probeer Mollie ────────────────────────────────────────────────────────
-    fetch('/api/create-payment.php', {
+    fetch('/api/create-payment', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ amount: grand, method: payment, customer: customer, items: cartItems })
